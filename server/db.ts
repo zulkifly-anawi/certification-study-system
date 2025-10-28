@@ -322,12 +322,23 @@ export async function getUserStats(userId: number) {
   const sessionStats = await db
     .select({
       totalSessions: sql<number>`COUNT(*)`,
-      totalQuestions: sql<number>`SUM(${sessions.totalQuestions})`,
-      totalCorrect: sql<number>`SUM(${sessions.correctAnswers})`,
-      avgScore: sql<number>`AVG(${sessions.score})`,
+      totalQuestions: sql<number>`COALESCE(SUM(${sessions.totalQuestions}), 0)`,
+      totalCorrect: sql<number>`COALESCE(SUM(${sessions.correctAnswers}), 0)`,
+      avgScore: sql<number>`COALESCE(AVG(${sessions.score}), 0)`,
     })
     .from(sessions)
     .where(eq(sessions.userId, userId));
 
-  return sessionStats[0] || null;
+  const result = sessionStats[0];
+  return result ? {
+    totalSessions: Number(result.totalSessions) || 0,
+    totalQuestions: Number(result.totalQuestions) || 0,
+    totalCorrect: Number(result.totalCorrect) || 0,
+    avgScore: Number(result.avgScore) || 0,
+  } : {
+    totalSessions: 0,
+    totalQuestions: 0,
+    totalCorrect: 0,
+    avgScore: 0,
+  };
 }

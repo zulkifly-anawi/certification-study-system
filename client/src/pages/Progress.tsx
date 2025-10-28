@@ -39,6 +39,26 @@ export default function Progress() {
     );
   }
 
+  if (stats.isError) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <Card>
+          <CardHeader>
+            <CardTitle>Error Loading Progress</CardTitle>
+            <CardDescription>Failed to load your progress data</CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            <p className="text-sm text-muted-foreground">There was an error loading your statistics. Please try again.</p>
+            <div className="flex gap-2">
+              <Button onClick={() => stats.refetch()}>Retry</Button>
+              <Button variant="outline" onClick={() => setLocation("/")}>Go to Home</Button>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+    );
+  }
+
   const overallStats = stats.data;
   const totalQuestions = overallStats?.totalQuestions || 0;
   const totalCorrect = overallStats?.totalCorrect || 0;

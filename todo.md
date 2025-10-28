@@ -36,3 +36,4 @@
 
 ## Bugs to Fix
 - [x] Fix "Failed to start session" error when starting practice
+- [x] Fix loading screen stuck issue after completing session when navigating to progress page

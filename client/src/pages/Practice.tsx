@@ -120,6 +120,11 @@ export default function Practice() {
         durationSeconds,
       });
 
+      // Invalidate progress queries to refetch updated data
+      await utils.progress.getStats.invalidate();
+      await utils.progress.getByTopic.invalidate();
+      await utils.sessions.getHistory.invalidate();
+
       toast.success(`Session complete! Score: ${result.score}%`);
       setLocation("/progress");
     } catch (error) {
