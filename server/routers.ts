@@ -1,10 +1,31 @@
 import { COOKIE_NAME } from "@shared/const";
 import { getSessionCookieOptions } from "./_core/cookies";
 import { systemRouter } from "./_core/systemRouter";
-import { publicProcedure, router } from "./_core/trpc";
+import { publicProcedure, protectedProcedure, router } from "./_core/trpc";
+import { z } from "zod";
+import * as db from "./db";
+import questionBankData from "./question_bank.json";
+
+// Seed questions on server start
+(async () => {
+  try {
+    const questionsToSeed = questionBankData.map((q: any) => ({
+      questionId: q.question_id,
+      text: q.text,
+      options: q.options,
+      correctAnswer: q.correct_answer,
+      explanation: q.explanation,
+      topic: q.topic,
+      difficulty: q.difficulty as "easy" | "medium" | "hard",
+    }));
+    await db.seedQuestions(questionsToSeed);
+    console.log(`[Database] Seeded ${questionsToSeed.length} questions`);
+  } catch (error) {
+    console.error("[Database] Failed to seed questions:", error);
+  }
+})();
 
 export const appRouter = router({
-    // if you need to use socket.io, read and register route in server/_core/index.ts, all api should start with '/api/' so that the gateway can route correctly
   system: systemRouter,
   auth: router({
     me: publicProcedure.query(opts => opts.ctx.user),
@@ -17,12 +38,167 @@ export const appRouter = router({
     }),
   }),
 
-  // TODO: add feature routers here, e.g.
-  // todo: router({
-  //   list: protectedProcedure.query(({ ctx }) =>
-  //     db.getUserTodos(ctx.user.id)
-  //   ),
-  // }),
+  questions: router({
+    // Get random questions for practice
+    getRandom: protectedProcedure
+      .input(z.object({ count: z.number().min(1).max(150) }))
+      .query(async ({ input }) => {
+        return await db.getRandomQuestions(input.count);
+      }),
+
+    // Get questions by topic
+    getByTopic: protectedProcedure
+      .input(z.object({ 
+        topic: z.string(),
+        count: z.number().min(1).max(150)
+      }))
+      .query(async ({ input }) => {
+        return await db.getQuestionsByTopic(input.topic, input.count);
+      }),
+
+    // Get all available topics
+    getTopics: protectedProcedure
+      .query(async () => {
+        return await db.getAllTopics();
+      }),
+
+    // Get a specific question by ID
+    getById: protectedProcedure
+      .input(z.object({ id: z.number() }))
+      .query(async ({ input }) => {
+        return await db.getQuestionById(input.id);
+      }),
+  }),
+
+  sessions: router({
+    // Start a new practice session
+    start: protectedProcedure
+      .input(z.object({
+        sessionType: z.enum(["practice", "quiz", "exam", "topic"]),
+        topic: z.string().optional(),
+        totalQuestions: z.number(),
+      }))
+      .mutation(async ({ ctx, input }) => {
+        const sessionId = await db.createSession({
+          userId: ctx.user.id,
+          sessionType: input.sessionType,
+          topic: input.topic || null,
+          totalQuestions: input.totalQuestions,
+          correctAnswers: 0,
+          score: 0,
+          startedAt: new Date(),
+        });
+        return { sessionId };
+      }),
+
+    // Submit an answer for a question in a session
+    submitAnswer: protectedProcedure
+      .input(z.object({
+        sessionId: z.number(),
+        questionId: z.number(),
+        userAnswer: z.string().length(1),
+      }))
+      .mutation(async ({ ctx, input }) => {
+        // Get the question to check if answer is correct
+        const question = await db.getQuestionById(input.questionId);
+        if (!question) {
+          throw new Error("Question not found");
+        }
+
+        const isCorrect = question.correctAnswer === input.userAnswer;
+
+        // Save the answer
+        await db.saveSessionAnswer({
+          sessionId: input.sessionId,
+          questionId: input.questionId,
+          userAnswer: input.userAnswer,
+          isCorrect,
+          answeredAt: new Date(),
+        });
+
+        // Update topic progress
+        await db.updateTopicProgress(ctx.user.id, question.topic, isCorrect);
+
+        return {
+          isCorrect,
+          correctAnswer: question.correctAnswer,
+          explanation: question.explanation,
+        };
+      }),
+
+    // Complete a session and calculate final score
+    complete: protectedProcedure
+      .input(z.object({
+        sessionId: z.number(),
+        durationSeconds: z.number(),
+      }))
+      .mutation(async ({ input }) => {
+        // Get all answers for this session
+        const answers = await db.getSessionAnswers(input.sessionId);
+        const correctCount = answers.filter(a => a.isCorrect).length;
+        const totalCount = answers.length;
+        const score = totalCount > 0 ? Math.round((correctCount / totalCount) * 100) : 0;
+
+        // Update session
+        await db.updateSession(input.sessionId, {
+          correctAnswers: correctCount,
+          score,
+          completedAt: new Date(),
+          durationSeconds: input.durationSeconds,
+        });
+
+        return {
+          correctAnswers: correctCount,
+          totalQuestions: totalCount,
+          score,
+        };
+      }),
+
+    // Get user's session history
+    getHistory: protectedProcedure
+      .input(z.object({ limit: z.number().optional().default(10) }))
+      .query(async ({ ctx, input }) => {
+        return await db.getUserSessions(ctx.user.id, input.limit);
+      }),
+
+    // Get details of a specific session
+    getById: protectedProcedure
+      .input(z.object({ sessionId: z.number() }))
+      .query(async ({ input }) => {
+        const session = await db.getSessionById(input.sessionId);
+        if (!session) return null;
+
+        const answers = await db.getSessionAnswers(input.sessionId);
+        return { ...session, answers };
+      }),
+  }),
+
+  progress: router({
+    // Get user's overall statistics
+    getStats: protectedProcedure
+      .query(async ({ ctx }) => {
+        const stats = await db.getUserStats(ctx.user.id);
+        const topicProgress = await db.getUserTopicProgress(ctx.user.id);
+        
+        return {
+          ...stats,
+          topicProgress,
+        };
+      }),
+
+    // Get user's progress by topic
+    getByTopic: protectedProcedure
+      .query(async ({ ctx }) => {
+        return await db.getUserTopicProgress(ctx.user.id);
+      }),
+
+    // Get weak topics (below threshold accuracy)
+    getWeakTopics: protectedProcedure
+      .input(z.object({ threshold: z.number().optional().default(75) }))
+      .query(async ({ ctx, input }) => {
+        return await db.getWeakTopics(ctx.user.id, input.threshold);
+      }),
+  }),
 });
 
 export type AppRouter = typeof appRouter;

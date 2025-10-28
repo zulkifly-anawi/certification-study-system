@@ -1,0 +1,120 @@
+{
+  "query": "SELECT COUNT(*) as count, topic, difficulty FROM questions GROUP BY topic, difficulty ORDER BY topic",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 3UM4huzBRqdDojB.1697ca2f01d2 --database c8q5ZjHgoGHDk3Mrv468Kv --execute SELECT COUNT(*) as count, topic, difficulty FROM questions GROUP BY topic, difficulty ORDER BY topic",
+  "rows": [
+    {
+      "count": "2",
+      "topic": "Adaptive Approaches",
+      "difficulty": "medium"
+    },
+    {
+      "count": "1",
+      "topic": "Cost Management",
+      "difficulty": "hard"
+    },
+    {
+      "count": "1",
+      "topic": "Development Approaches",
+      "difficulty": "hard"
+    },
+    {
+      "count": "1",
+      "topic": "Development Approaches",
+      "difficulty": "medium"
+    },
+    {
+      "count": "1",
+      "topic": "Organizational Influences",
+      "difficulty": "easy"
+    },
+    {
+      "count": "1",
+      "topic": "Organizational Structures",
+      "difficulty": "medium"
+    },
+    {
+      "count": "1",
+      "topic": "Project Closing",
+      "difficulty": "easy"
+    },
+    {
+      "count": "1",
+      "topic": "Project Initiation",
+      "difficulty": "hard"
+    },
+    {
+      "count": "1",
+      "topic": "Project Initiation",
+      "difficulty": "medium"
+    },
+    {
+      "count": "1",
+      "topic": "Project Initiation",
+      "difficulty": "easy"
+    },
+    {
+      "count": "1",
+      "topic": "Project Management Foundations",
+      "difficulty": "easy"
+    },
+    {
+      "count": "1",
+      "topic": "Project Management Principles",
+      "difficulty": "easy"
+    },
+    {
+      "count": "1",
+      "topic": "Project Performance",
+      "difficulty": "medium"
+    },
+    {
+      "count": "1",
+      "topic": "Project Planning",
+      "difficulty": "medium"
+    },
+    {
+      "count": "1",
+      "topic": "Project Roles",
+      "difficulty": "medium"
+    },
+    {
+      "count": "1",
+      "topic": "Requirements Management",
+      "difficulty": "medium"
+    },
+    {
+      "count": "1",
+      "topic": "Risk Management",
+      "difficulty": "easy"
+    },
+    {
+      "count": "1",
+      "topic": "Schedule Management",
+      "difficulty": "medium"
+    },
+    {
+      "count": "3",
+      "topic": "Scope Management",
+      "difficulty": "easy"
+    },
+    {
+      "count": "1",
+      "topic": "Scope Management",
+      "difficulty": "hard"
+    },
+    {
+      "count": "1",
+      "topic": "Team Management",
+      "difficulty": "medium"
+    },
+    {
+      "count": "1",
+      "topic": "Team Management",
+      "difficulty": "easy"
+    }
+  ],
+  "messages": [],
+  "stdout": "count\ttopic\tdifficulty\n2\tAdaptive Approaches\tmedium\n1\tCost Management\thard\n1\tDevelopment Approaches\thard\n1\tDevelopment Approaches\tmedium\n1\tOrganizational Influences\teasy\n1\tOrganizational Structures\tmedium\n1\tProject Closing\teasy\n1\tProject Initiation\thard\n1\tProject Initiation\tmedium\n1\tProject Initiation\teasy\n1\tProject Management Foundations\teasy\n1\tProject Management Principles\teasy\n1\tProject Performance\tmedium\n1\tProject Planning\tmedium\n1\tProject Roles\tmedium\n1\tRequirements Management\tmedium\n1\tRisk Management\teasy\n1\tSchedule Management\tmedium\n3\tScope Management\teasy\n1\tScope Management\thard\n1\tTeam Management\tmedium\n1\tTeam Management\teasy\n",
+  "stderr": "",
+  "execution_time_ms": 1529
+}

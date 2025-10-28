@@ -1,0 +1,352 @@
+[
+  {
+    "question_id": "Q006",
+    "text": "Which technique is used to identify roles and the level of responsibilities?",
+    "options": {
+      "A": "Capability table",
+      "B": "Dependency and responsibility tracker",
+      "C": "Responsible, accountable, consulted, and informed (RACI) matrix",
+      "D": "Affinity diagram"
+    },
+    "correct_answer": "C",
+    "explanation": "The RACI matrix is a responsibility assignment matrix that clarifies roles and responsibilities by categorizing team members as Responsible, Accountable, Consulted, or Informed for each project task or deliverable.",
+    "topic": "Team Management",
+    "difficulty": "medium"
+  },
+  {
+    "question_id": "Q007",
+    "text": "What is an agile control method that shows where the project is going over time?",
+    "options": {
+      "A": "Burnup chart",
+      "B": "Backlog",
+      "C": "Burndown chart",
+      "D": "Kanban board"
+    },
+    "correct_answer": "C",
+    "explanation": "A burndown chart is an agile project management tool that shows the amount of work remaining over time. It helps teams track progress and predict when work will be completed.",
+    "topic": "Adaptive Approaches",
+    "difficulty": "medium"
+  },
+  {
+    "question_id": "Q008",
+    "text": "At a requirements workshop, the attendees have stated that all of the elicited requirements are \"must haves.\" Which tool can be used to prioritize the requirements?",
+    "options": {
+      "A": "Use case",
+      "B": "Multivoting",
+      "C": "Peer review",
+      "D": "Wireframe"
+    },
+    "correct_answer": "B",
+    "explanation": "Multivoting is a group decision-making technique used to prioritize items when everything seems important. It allows team members to vote on multiple options to reach consensus on priorities.",
+    "topic": "Requirements Management",
+    "difficulty": "medium"
+  },
+  {
+    "question_id": "Q009",
+    "text": "A project team is working closely with the product owner to determine inputs for the scope. Due to the complexity of the project, the team will develop a hierarchical description of the project requirements. Which artifact will be developed?",
+    "options": {
+      "A": "Risk breakdown structure (RBS)",
+      "B": "Definition of done (DoD)",
+      "C": "Return on investment (ROI)",
+      "D": "Work breakdown structure (WBS)"
+    },
+    "correct_answer": "D",
+    "explanation": "The Work Breakdown Structure (WBS) is a hierarchical decomposition of the total scope of work to be carried out by the project team. It breaks down project deliverables into smaller, more manageable components.",
+    "topic": "Scope Management",
+    "difficulty": "easy"
+  },
+  {
+    "question_id": "Q010",
+    "text": "Which of the following is the first step in the project management process?",
+    "options": {
+      "A": "Planning",
+      "B": "Initiating",
+      "C": "Executing",
+      "D": "Monitoring and Controlling"
+    },
+    "correct_answer": "B",
+    "explanation": "Initiating is the first step in the project management process, where the project is formally authorized and the project manager is assigned. It involves developing the project charter and identifying stakeholders.",
+    "topic": "Project Management Foundations",
+    "difficulty": "easy"
+  },
+  {
+    "question_id": "Q011",
+    "text": "Which process involves formally accepting project deliverables?",
+    "options": {
+      "A": "Project Planning",
+      "B": "Project Execution",
+      "C": "Project Closing",
+      "D": "Project Monitoring and Controlling"
+    },
+    "correct_answer": "C",
+    "explanation": "Project Closing is the final phase where formal acceptance of all project deliverables occurs. This includes transferring project ownership, releasing resources, and documenting lessons learned.",
+    "topic": "Project Closing",
+    "difficulty": "easy"
+  },
+  {
+    "question_id": "Q012",
+    "text": "What is the primary purpose of the project charter?",
+    "options": {
+      "A": "To detail the project schedule",
+      "B": "To formally authorize the project",
+      "C": "To assign tasks to team members",
+      "D": "To estimate project costs"
+    },
+    "correct_answer": "B",
+    "explanation": "The project charter formally authorizes the project, giving the project manager the authority to apply organizational resources to project activities. It is issued by the project sponsor.",
+    "topic": "Project Initiation",
+    "difficulty": "easy"
+  },
+  {
+    "question_id": "Q013",
+    "text": "What does the critical path represent in a project schedule?",
+    "options": {
+      "A": "The shortest path to complete the project",
+      "B": "The sequence of tasks that can be delayed without affecting the project completion date",
+      "C": "The sequence of tasks with the longest duration and least flexibility",
+      "D": "The most expensive tasks in the project"
+    },
+    "correct_answer": "C",
+    "explanation": "The critical path is the sequence of activities that determines the shortest possible project duration. Any delay in critical path tasks will directly impact the project completion date.",
+    "topic": "Schedule Management",
+    "difficulty": "medium"
+  },
+  {
+    "question_id": "Q014",
+    "text": "Which of the following is NOT a key output of the Planning process group?",
+    "options": {
+      "A": "Project management plan",
+      "B": "Scope statement",
+      "C": "Work performance data",
+      "D": "Schedule baseline"
+    },
+    "correct_answer": "C",
+    "explanation": "Work performance data is generated during the Executing, Monitoring, and Controlling process groups, not during Planning. Planning outputs include the project management plan and various baselines.",
+    "topic": "Project Planning",
+    "difficulty": "medium"
+  },
+  {
+    "question_id": "Q015",
+    "text": "What is the primary purpose of a Work Breakdown Structure (WBS)?",
+    "options": {
+      "A": "To allocate resources",
+      "B": "To break down project tasks into manageable components",
+      "C": "To define project risks",
+      "D": "To schedule project activities"
+    },
+    "correct_answer": "B",
+    "explanation": "The WBS decomposes the project scope into smaller, more manageable work packages. This hierarchical structure makes it easier to plan, manage, estimate, and control project work.",
+    "topic": "Scope Management",
+    "difficulty": "easy"
+  },
+  {
+    "question_id": "Q016",
+    "text": "Earned Value Management (EVM) is a project performance measurement technique that combines:",
+    "options": {
+      "A": "Scope, time, and cost",
+      "B": "Scope and time only",
+      "C": "Time and cost only",
+      "D": "Cost and quality only"
+    },
+    "correct_answer": "A",
+    "explanation": "EVM integrates project scope, schedule (time), and budget (cost) to provide a comprehensive view of project performance. It uses metrics like Planned Value, Earned Value, and Actual Cost.",
+    "topic": "Project Performance",
+    "difficulty": "medium"
+  },
+  {
+    "question_id": "Q017",
+    "text": "Which technique is used to identify risks in a project?",
+    "options": {
+      "A": "SWOT Analysis",
+      "B": "Monte Carlo Simulation",
+      "C": "Fishbone Diagram",
+      "D": "Pareto Chart"
+    },
+    "correct_answer": "A",
+    "explanation": "SWOT Analysis (Strengths, Weaknesses, Opportunities, and Threats) is used to identify potential risks and opportunities. It examines internal and external factors that may impact the project.",
+    "topic": "Risk Management",
+    "difficulty": "easy"
+  },
+  {
+    "question_id": "Q018",
+    "text": "What is the purpose of the project scope statement?",
+    "options": {
+      "A": "To provide a detailed description of the project deliverables",
+      "B": "To estimate project costs",
+      "C": "To assign tasks to team members",
+      "D": "To monitor project progress"
+    },
+    "correct_answer": "A",
+    "explanation": "The project scope statement provides a detailed description of the project and product scope, including deliverables, assumptions, constraints, and acceptance criteria.",
+    "topic": "Scope Management",
+    "difficulty": "easy"
+  },
+  {
+    "question_id": "Q019",
+    "text": "A scope baseline is composed of which three components?",
+    "options": {
+      "A": "Project Charter, Work Breakdown Structure, Project Management Plan",
+      "B": "Project Scope Statement, Work Breakdown Structure, Project Schedule",
+      "C": "Project Scope Statement, Work Breakdown Structure, WBS Dictionary",
+      "D": "Project Scope Statement, Work Breakdown Structure, Project Cost Baseline"
+    },
+    "correct_answer": "C",
+    "explanation": "The scope baseline consists of the approved project scope statement, WBS, and WBS dictionary. It serves as the basis for comparison to actual project performance.",
+    "topic": "Scope Management",
+    "difficulty": "hard"
+  },
+  {
+    "question_id": "Q020",
+    "text": "The RACI matrix is a tool used to:",
+    "options": {
+      "A": "Document project risks",
+      "B": "Define the project scope",
+      "C": "Assign roles and responsibilities within the project team",
+      "D": "Track project performance"
+    },
+    "correct_answer": "C",
+    "explanation": "The RACI matrix clarifies roles and responsibilities by identifying who is Responsible, Accountable, Consulted, and Informed for each project activity or deliverable.",
+    "topic": "Team Management",
+    "difficulty": "easy"
+  },
+  {
+    "question_id": "Q021",
+    "text": "Who is responsible for developing project management methodologies and best practices, coordinating communication across projects, and conducting project audits to ensure compliance with project management standards?",
+    "options": {
+      "A": "The project manager",
+      "B": "The sponsor",
+      "C": "The PMO",
+      "D": "The project team"
+    },
+    "correct_answer": "C",
+    "explanation": "The Project Management Office (PMO) is responsible for developing and maintaining project management standards, methodologies, and best practices across the organization. They also coordinate communication and conduct audits.",
+    "topic": "Organizational Structures",
+    "difficulty": "medium"
+  },
+  {
+    "question_id": "Q022",
+    "text": "Incremental delivery means that:",
+    "options": {
+      "A": "We deliver nonfunctional increments in the iteration retrospectives",
+      "B": "We deploy functional increments over the course of the project",
+      "C": "We release working software only after testing each increment",
+      "D": "We improve and elaborate our agile process with each increment delivered"
+    },
+    "correct_answer": "B",
+    "explanation": "Incremental delivery means deploying functional increments of the product over the course of the project, allowing for early and continuous delivery of value to stakeholders.",
+    "topic": "Adaptive Approaches",
+    "difficulty": "medium"
+  },
+  {
+    "question_id": "Q023",
+    "text": "The business case documents the business needs and the cost-benefit analysis that justifies the project. Which of the following best describes the responsibility of the project manager within the project business case?",
+    "options": {
+      "A": "Making changes on the business case if necessary",
+      "B": "The project manager may make recommendations to keep the project business case in alignment with the goals and objectives of the organization",
+      "C": "Development of the project business case",
+      "D": "Update the business case at the end of each phase"
+    },
+    "correct_answer": "B",
+    "explanation": "The project manager may make recommendations to keep the business case aligned with organizational goals, but typically does not create or directly modify the business case, which is usually developed by the sponsor or business analyst.",
+    "topic": "Project Initiation",
+    "difficulty": "hard"
+  },
+  {
+    "question_id": "Q024",
+    "text": "A project manager has just taken over a project to develop a product using a hybrid life cycle. With this project, the hardware has fixed requirements while the software requirements are still evolving. How should the project manager apply the hybrid life cycle for this project?",
+    "options": {
+      "A": "Develop the hardware with a predictive life cycle and use an adaptive life cycle for the software",
+      "B": "Both the hardware and software should have their scope defined iteratively",
+      "C": "Both the hardware and software should have their scope defined during initial project planning",
+      "D": "Develop the software with a predictive life cycle and use an adaptive life cycle for the hardware"
+    },
+    "correct_answer": "A",
+    "explanation": "A hybrid approach combines predictive and adaptive methods. For fixed requirements (hardware), use predictive/waterfall. For evolving requirements (software), use adaptive/agile. This allows appropriate methodology for each component.",
+    "topic": "Development Approaches",
+    "difficulty": "hard"
+  },
+  {
+    "question_id": "Q025",
+    "text": "Which of the following business documents justify why the project is authorized?",
+    "options": {
+      "A": "Business case",
+      "B": "Project charter",
+      "C": "Scope statement of work",
+      "D": "Project management plan"
+    },
+    "correct_answer": "A",
+    "explanation": "The business case provides the justification for the project, including the cost-benefit analysis and alignment with organizational strategy. The project charter then formally authorizes the project based on the business case.",
+    "topic": "Project Initiation",
+    "difficulty": "medium"
+  },
+  {
+    "question_id": "Q026",
+    "text": "What is the difference between a predictive lifecycle and an adaptive lifecycle?",
+    "options": {
+      "A": "The predictive follows the same pattern for each iteration and the adaptive lifecycle changes its approach based upon performance growth of the project results",
+      "B": "Predictive lifecycle forecasts project completion; adaptive lifecycle completes the project when the money runs out",
+      "C": "Predictive lifecycle is plan-driven; adaptive lifecycle is change-driven",
+      "D": "There is no difference"
+    },
+    "correct_answer": "C",
+    "explanation": "Predictive (waterfall) lifecycles are plan-driven with detailed upfront planning and sequential execution. Adaptive (agile) lifecycles are change-driven, embracing change and delivering in iterations with continuous feedback.",
+    "topic": "Development Approaches",
+    "difficulty": "medium"
+  },
+  {
+    "question_id": "Q027",
+    "text": "Lessons learned repositories, project document templates, and guidelines for tailoring the organization's standard processes to the needs of the project are all examples of what?",
+    "options": {
+      "A": "Organizational governance frameworks",
+      "B": "Organizational process assets (OPAs)",
+      "C": "Work performance data",
+      "D": "Enterprise environmental factors (EEFs)"
+    },
+    "correct_answer": "B",
+    "explanation": "Organizational Process Assets (OPAs) are plans, processes, policies, procedures, and knowledge bases specific to and used by the performing organization. They include templates, historical information, and lessons learned.",
+    "topic": "Organizational Influences",
+    "difficulty": "easy"
+  },
+  {
+    "question_id": "Q028",
+    "text": "Which of the following is NOT a responsibility of the project manager?",
+    "options": {
+      "A": "Integrating the project components into a cohesive whole",
+      "B": "Promoting good communication",
+      "C": "Enforcing professional and social responsibility",
+      "D": "Approving the final project management plan"
+    },
+    "correct_answer": "D",
+    "explanation": "The project sponsor, not the project manager, typically approves the final project management plan. The project manager develops the plan and manages its execution, but approval authority rests with the sponsor.",
+    "topic": "Project Roles",
+    "difficulty": "medium"
+  },
+  {
+    "question_id": "Q029",
+    "text": "Which principle of project management emphasizes the importance of creating an environment where team members feel valued and empowered?",
+    "options": {
+      "A": "Be a diligent, respectful, and caring steward",
+      "B": "Create a collaborative project team environment",
+      "C": "Demonstrate leadership behaviors",
+      "D": "Focus on value"
+    },
+    "correct_answer": "B",
+    "explanation": "The principle \"Create a collaborative project team environment\" emphasizes building a culture where team members feel valued, empowered, and motivated to contribute their best work.",
+    "topic": "Project Management Principles",
+    "difficulty": "easy"
+  },
+  {
+    "question_id": "Q030",
+    "text": "A project has a Budget at Completion (BAC) of $100,000. The project is 50% complete and has spent $60,000. What is the Cost Performance Index (CPI)?",
+    "options": {
+      "A": "0.83",
+      "B": "1.20",
+      "C": "0.60",
+      "D": "1.67"
+    },
+    "correct_answer": "A",
+    "explanation": "CPI = EV / AC. Earned Value (EV) = BAC \u00d7 % Complete = $100,000 \u00d7 0.50 = $50,000. Actual Cost (AC) = $60,000. CPI = $50,000 / $60,000 = 0.83. A CPI less than 1.0 indicates the project is over budget.",
+    "topic": "Cost Management",
+    "difficulty": "hard"
+  }
+]

@@ -1,0 +1,35 @@
+# CAPM Study Web App - TODO
+
+## Phase 1: Database Schema & Project Structure
+- [x] Define database schema for questions, user progress, and sessions
+- [x] Set up question bank table with topics and difficulty levels
+- [x] Set up user progress tracking tables
+- [x] Set up practice session history tables
+
+## Phase 2: Backend API (tRPC Procedures)
+- [x] Create procedure to fetch random questions
+- [x] Create procedure to fetch questions by topic
+- [x] Create procedure to submit answers and calculate scores
+- [x] Create procedure to fetch user progress statistics
+- [x] Create procedure to identify weak areas (topics < 75% accuracy)
+- [x] Create procedure to fetch session history
+- [x] Seed initial 25 questions from the question bank
+
+## Phase 3: Frontend UI
+- [x] Design landing page with study modes
+- [x] Implement Practice Questions mode (5, 10, 20, custom)
+- [x] Implement Quiz Mode (20 questions)
+- [x] Implement Full Exam Mode (150 questions)
+- [x] Implement Study by Topic mode
+- [x] Implement Progress Dashboard with statistics
+- [x] Implement Weak Areas Review page
+- [x] Implement Session History page
+- [x] Add question display with multiple choice options
+- [x] Add immediate feedback with explanations
+- [x] Add performance charts and visualizations
+
+## Phase 4: Testing & Polish
+- [x] Test all practice modes
+- [x] Test progress tracking accuracy
+- [x] Test responsive design on mobile
+- [x] Create checkpoint for deployment
