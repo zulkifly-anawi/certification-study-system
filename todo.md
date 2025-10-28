@@ -33,3 +33,6 @@
 - [x] Test progress tracking accuracy
 - [x] Test responsive design on mobile
 - [x] Create checkpoint for deployment
+
+## Bugs to Fix
+- [x] Fix "Failed to start session" error when starting practice

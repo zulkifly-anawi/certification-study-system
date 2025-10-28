@@ -31,6 +31,7 @@ export default function Practice() {
   const startSession = trpc.sessions.start.useMutation();
   const submitAnswer = trpc.sessions.submitAnswer.useMutation();
   const completeSession = trpc.sessions.complete.useMutation();
+  const utils = trpc.useUtils();
 
   // Parse URL params
   useEffect(() => {
@@ -53,10 +54,8 @@ export default function Practice() {
       // Fetch questions
       let fetchedQuestions;
       if (mode === "topic" && selectedTopic) {
-        const utils = trpc.useUtils();
         fetchedQuestions = await utils.questions.getByTopic.fetch({ topic: selectedTopic, count });
       } else {
-        const utils = trpc.useUtils();
         fetchedQuestions = await utils.questions.getRandom.fetch({ count });
       }
 
