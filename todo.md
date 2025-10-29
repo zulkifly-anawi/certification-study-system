@@ -43,3 +43,4 @@
 - [x] Build question import form with JSON/CSV support
 - [x] Add admin-only route and access control
 - [ ] Populate database with questions from user's PDFs using the import panel
+- [x] Add admin import link to home page (visible only to admins)
