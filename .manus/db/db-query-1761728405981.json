@@ -1,0 +1,14 @@
+{
+  "query": "SELECT COUNT(*) as total_questions, COUNT(DISTINCT topic) as unique_topics FROM questions;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 3UM4huzBRqdDojB.1697ca2f01d2 --database c8q5ZjHgoGHDk3Mrv468Kv --execute SELECT COUNT(*) as total_questions, COUNT(DISTINCT topic) as unique_topics FROM questions;",
+  "rows": [
+    {
+      "total_questions": "35",
+      "unique_topics": "23"
+    }
+  ],
+  "messages": [],
+  "stdout": "total_questions\tunique_topics\n35\t23\n",
+  "stderr": "",
+  "execution_time_ms": 1556
+}

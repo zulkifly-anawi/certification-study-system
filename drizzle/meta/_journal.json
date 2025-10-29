@@ -15,6 +15,13 @@
       "when": 1761672086327,
       "tag": "0001_careful_sersi",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "5",
+      "when": 1761728191370,
+      "tag": "0002_dusty_nightshade",
+      "breakpoints": true
     }
   ]
 }

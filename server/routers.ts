@@ -219,24 +219,32 @@ export const appRouter = router({
       }))
       .mutation(async ({ input }) => {
         try {
-          const questionsToImport = input.questions.map((q, index) => ({
-            questionId: `imported_${Date.now()}_${index}`,
-            text: q.text,
-            options: q.options,
-            correctAnswer: q.correctAnswer,
-            explanation: q.explanation || "See course materials for detailed explanation",
-            topic: q.topic,
-            difficulty: q.difficulty as "easy" | "medium" | "hard",
-          }));
+          const timestamp = Date.now();
+          const questionsToImport = input.questions.map((q, index) => {
+            const uniqueId = `Q${timestamp}_${Math.random().toString(36).substr(2, 9)}_${index}`;
+            return {
+              questionId: uniqueId,
+              text: q.text,
+              options: q.options,
+              correctAnswer: q.correctAnswer,
+              explanation: q.explanation || "See course materials for detailed explanation",
+              topic: q.topic,
+              difficulty: q.difficulty as "easy" | "medium" | "hard",
+            };
+          });
 
+          console.log(`[Admin] Importing ${questionsToImport.length} questions`);
           await db.seedQuestions(questionsToImport);
+          
           return {
             success: true,
             imported: questionsToImport.length,
             message: `Successfully imported ${questionsToImport.length} questions`,
           };
         } catch (error) {
-          throw new Error(`Failed to import questions: ${error}`);
+          const errorMsg = error instanceof Error ? error.message : String(error);
+          console.error(`[Admin] Import failed: ${errorMsg}`);
+          throw new Error(`Failed to import questions: ${errorMsg}`);
         }
       }),
   }),

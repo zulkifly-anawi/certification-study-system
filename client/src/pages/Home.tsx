@@ -1,4 +1,5 @@
 import { useAuth } from "@/_core/hooks/useAuth";
+import { trpc } from "@/lib/trpc";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { BookOpen, Brain, Target, TrendingUp, History, Award, Settings } from "lucide-react";
@@ -8,6 +9,11 @@ import { useLocation } from "wouter";
 export default function Home() {
   const { user, loading, isAuthenticated } = useAuth();
   const [, setLocation] = useLocation();
+  
+  // Fetch question count and topics
+  const { data: stats } = trpc.progress.getStats.useQuery(undefined, {
+    enabled: isAuthenticated,
+  });
 
   if (loading) {
     return (
@@ -98,6 +104,9 @@ export default function Home() {
     },
   ];
 
+  const questionCount = stats?.totalQuestions || 0;
+  const topicCount = stats?.topicProgress?.length || 0;
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50">
       {/* Header */}
@@ -170,11 +179,11 @@ export default function Home() {
             <CardContent>
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                 <div className="text-center p-4 bg-blue-50 rounded-lg">
-                  <div className="text-2xl font-bold text-blue-600">25</div>
+                  <div className="text-2xl font-bold text-blue-600">{questionCount}</div>
                   <div className="text-sm text-muted-foreground">Questions Available</div>
                 </div>
                 <div className="text-center p-4 bg-green-50 rounded-lg">
-                  <div className="text-2xl font-bold text-green-600">12</div>
+                  <div className="text-2xl font-bold text-green-600">{topicCount}</div>
                   <div className="text-sm text-muted-foreground">Topics Covered</div>
                 </div>
                 <div className="text-center p-4 bg-purple-50 rounded-lg">

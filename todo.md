@@ -44,3 +44,5 @@
 - [x] Add admin-only route and access control
 - [ ] Populate database with questions from user's PDFs using the import panel
 - [x] Add admin import link to home page (visible only to admins)
+- [x] Fix "Failed to import questions" error in admin import panel
+- [x] Fix Quick Stats showing cached question count after import

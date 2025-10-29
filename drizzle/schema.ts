@@ -1,4 +1,4 @@
-import { int, mysqlEnum, mysqlTable, text, timestamp, varchar, boolean, json } from "drizzle-orm/mysql-core";
+import { int, mysqlEnum, mysqlTable, text, timestamp, varchar, json, boolean } from "drizzle-orm/mysql-core";
 
 /**
  * Core user table backing auth flow.
@@ -23,7 +23,7 @@ export type InsertUser = typeof users.$inferInsert;
  */
 export const questions = mysqlTable("questions", {
   id: int("id").autoincrement().primaryKey(),
-  questionId: varchar("questionId", { length: 20 }).notNull().unique(), // e.g., Q001, Q002
+  questionId: varchar("questionId", { length: 50 }).notNull(), // e.g., Q001, Q002, or imported_timestamp_index
   text: text("text").notNull(),
   options: json("options").notNull().$type<{ A: string; B: string; C: string; D: string }>(),
   correctAnswer: varchar("correctAnswer", { length: 1 }).notNull(), // A, B, C, or D

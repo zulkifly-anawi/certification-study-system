@@ -64,12 +64,17 @@ export default function AdminImport() {
       toast.success(`Successfully imported ${questions.length} questions!`);
       setJsonInput("");
     } catch (error) {
+      console.error("Full error object:", error);
       if (error instanceof SyntaxError) {
         toast.error("Invalid JSON format");
+      } else if (error instanceof Error) {
+        console.error("Error message:", error.message);
+        console.error("Error cause:", error.cause);
+        toast.error(error.message || "Failed to import questions");
       } else {
+        console.error("Unknown error type:", typeof error, error);
         toast.error("Failed to import questions");
       }
-      console.error(error);
     } finally {
       setIsLoading(false);
     }
