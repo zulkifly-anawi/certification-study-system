@@ -37,3 +37,9 @@
 ## Bugs to Fix
 - [x] Fix "Failed to start session" error when starting practice
 - [x] Fix loading screen stuck issue after completing session when navigating to progress page
+
+## Enhancement Tasks
+- [x] Create Admin Import Panel for bulk question import
+- [x] Build question import form with JSON/CSV support
+- [x] Add admin-only route and access control
+- [ ] Populate database with questions from user's PDFs using the import panel

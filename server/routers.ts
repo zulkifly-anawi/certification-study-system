@@ -1,7 +1,7 @@
 import { COOKIE_NAME } from "@shared/const";
 import { getSessionCookieOptions } from "./_core/cookies";
 import { systemRouter } from "./_core/systemRouter";
-import { publicProcedure, protectedProcedure, router } from "./_core/trpc";
+import { publicProcedure, protectedProcedure, adminProcedure, router } from "./_core/trpc";
 import { z } from "zod";
 import * as db from "./db";
 import questionBankData from "./question_bank.json";
@@ -197,6 +197,47 @@ export const appRouter = router({
       .input(z.object({ threshold: z.number().optional().default(75) }))
       .query(async ({ ctx, input }) => {
         return await db.getWeakTopics(ctx.user.id, input.threshold);
+      }),
+  }),
+
+  admin: router({
+    importQuestions: adminProcedure
+      .input(z.object({
+        questions: z.array(z.object({
+          text: z.string(),
+          options: z.object({
+            A: z.string(),
+            B: z.string(),
+            C: z.string(),
+            D: z.string(),
+          }),
+          correctAnswer: z.enum(['A', 'B', 'C', 'D']),
+          explanation: z.string().optional(),
+          topic: z.string(),
+          difficulty: z.enum(['easy', 'medium', 'hard']).optional().default('medium'),
+        }))
+      }))
+      .mutation(async ({ input }) => {
+        try {
+          const questionsToImport = input.questions.map((q, index) => ({
+            questionId: `imported_${Date.now()}_${index}`,
+            text: q.text,
+            options: q.options,
+            correctAnswer: q.correctAnswer,
+            explanation: q.explanation || "See course materials for detailed explanation",
+            topic: q.topic,
+            difficulty: q.difficulty as "easy" | "medium" | "hard",
+          }));
+
+          await db.seedQuestions(questionsToImport);
+          return {
+            success: true,
+            imported: questionsToImport.length,
+            message: `Successfully imported ${questionsToImport.length} questions`,
+          };
+        } catch (error) {
+          throw new Error(`Failed to import questions: ${error}`);
+        }
       }),
   }),
 });
