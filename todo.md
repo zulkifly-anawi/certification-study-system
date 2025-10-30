@@ -46,3 +46,4 @@
 - [x] Add admin import link to home page (visible only to admins)
 - [x] Fix "Failed to import questions" error in admin import panel
 - [x] Fix Quick Stats showing cached question count after import
+- [x] Add export questions function to admin panel

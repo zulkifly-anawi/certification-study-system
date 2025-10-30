@@ -247,7 +247,32 @@ export const appRouter = router({
           throw new Error(`Failed to import questions: ${errorMsg}`);
         }
       }),
+
+    exportQuestions: adminProcedure
+      .query(async () => {
+        try {
+          const allQuestions = await db.getAllQuestions();
+          
+          const formattedQuestions = allQuestions.map(q => ({
+            text: q.text,
+            options: q.options,
+            correctAnswer: q.correctAnswer,
+            explanation: q.explanation,
+            topic: q.topic,
+            difficulty: q.difficulty,
+          }));
+
+          return {
+            success: true,
+            questions: formattedQuestions,
+            totalCount: formattedQuestions.length,
+            exportedAt: new Date().toISOString(),
+          };
+        } catch (error) {
+          const errorMsg = error instanceof Error ? error.message : String(error);
+          console.error(`[Admin] Export failed: ${errorMsg}`);
+          throw new Error(`Failed to export questions: ${errorMsg}`);
+        }
+      }),
   }),
 });
-
-export type AppRouter = typeof appRouter;

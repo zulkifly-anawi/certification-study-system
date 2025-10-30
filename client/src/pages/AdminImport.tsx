@@ -6,14 +6,16 @@ import { Textarea } from "@/components/ui/textarea";
 import { trpc } from "@/lib/trpc";
 import { useLocation } from "wouter";
 import { toast } from "sonner";
-import { Upload, ArrowLeft, AlertCircle, CheckCircle } from "lucide-react";
+import { Upload, Download, ArrowLeft, AlertCircle, CheckCircle } from "lucide-react";
 
 export default function AdminImport() {
   const { user, isAuthenticated } = useAuth();
   const [, setLocation] = useLocation();
   const [jsonInput, setJsonInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [isExporting, setIsExporting] = useState(false);
   const importMutation = trpc.admin.importQuestions.useMutation();
+  const exportQuery = trpc.admin.exportQuestions.useQuery();
 
   // Check if user is admin
   if (!isAuthenticated || user?.role !== "admin") {
@@ -63,6 +65,8 @@ export default function AdminImport() {
       await importMutation.mutateAsync({ questions });
       toast.success(`Successfully imported ${questions.length} questions!`);
       setJsonInput("");
+      // Invalidate export query to refresh the count
+      await exportQuery.refetch();
     } catch (error) {
       console.error("Full error object:", error);
       if (error instanceof SyntaxError) {
@@ -77,6 +81,32 @@ export default function AdminImport() {
       }
     } finally {
       setIsLoading(false);
+    }
+  };
+
+  const handleExport = async () => {
+    try {
+      setIsExporting(true);
+      const result = await exportQuery.refetch();
+      
+      if (result.data?.questions) {
+        const dataStr = JSON.stringify(result.data.questions, null, 2);
+        const dataBlob = new Blob([dataStr], { type: "application/json" });
+        const url = URL.createObjectURL(dataBlob);
+        const link = document.createElement("a");
+        link.href = url;
+        link.download = `capm-questions-export-${new Date().toISOString().split('T')[0]}.json`;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        URL.revokeObjectURL(url);
+        toast.success(`Exported ${result.data.totalCount} questions successfully!`);
+      }
+    } catch (error) {
+      console.error("Export error:", error);
+      toast.error("Failed to export questions");
+    } finally {
+      setIsExporting(false);
     }
   };
 
@@ -106,6 +136,35 @@ export default function AdminImport() {
           Back to Home
         </Button>
 
+        {/* Export Card */}
+        <Card className="mb-6 bg-gradient-to-r from-green-50 to-emerald-50 border-green-200">
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2">
+              <Download className="w-5 h-5 text-green-600" />
+              Export Questions
+            </CardTitle>
+            <CardDescription>
+              Download all questions from the database as JSON
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            <div className="bg-white rounded-lg p-4 border border-green-100">
+              <p className="text-sm text-gray-600 mb-4">
+                Total questions in database: <span className="font-bold text-green-600">{exportQuery.data?.totalCount || 0}</span>
+              </p>
+              <Button
+                onClick={handleExport}
+                disabled={isExporting || (exportQuery.data?.totalCount || 0) === 0}
+                className="w-full bg-green-600 hover:bg-green-700"
+                size="lg"
+              >
+                {isExporting ? "Exporting..." : "Download All Questions"}
+              </Button>
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Import Card */}
         <Card className="mb-6">
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
@@ -186,9 +245,10 @@ export default function AdminImport() {
         {/* Tips */}
         <Card>
           <CardHeader>
-            <CardTitle className="text-base">Tips for Bulk Import:</CardTitle>
+            <CardTitle className="text-base">Tips for Bulk Import/Export:</CardTitle>
           </CardHeader>
           <CardContent className="space-y-2 text-sm text-gray-600">
+            <p>• Use the Export function to backup your questions or share them</p>
             <p>• You can import multiple questions at once by providing a JSON array</p>
             <p>• Make sure all required fields are present for each question</p>
             <p>• Use consistent topic names across all questions</p>

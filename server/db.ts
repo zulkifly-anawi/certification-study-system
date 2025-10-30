@@ -342,3 +342,15 @@ export async function getUserStats(userId: number) {
     avgScore: 0,
   };
 }
+
+export async function getAllQuestions() {
+  const db = await getDb();
+  if (!db) return [];
+
+  const result = await db
+    .select()
+    .from(questions)
+    .orderBy(questions.topic, questions.difficulty);
+
+  return result;
+}
