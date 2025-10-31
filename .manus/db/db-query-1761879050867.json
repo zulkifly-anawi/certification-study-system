@@ -1,0 +1,110 @@
+{
+  "query": "SELECT questionId, COUNT(*) as count FROM questions GROUP BY questionId HAVING count > 1 ORDER BY questionId;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 3UM4huzBRqdDojB.1697ca2f01d2 --database c8q5ZjHgoGHDk3Mrv468Kv --execute SELECT questionId, COUNT(*) as count FROM questions GROUP BY questionId HAVING count > 1 ORDER BY questionId;",
+  "rows": [
+    {
+      "questionId": "Q006",
+      "count": "4"
+    },
+    {
+      "questionId": "Q007",
+      "count": "4"
+    },
+    {
+      "questionId": "Q008",
+      "count": "4"
+    },
+    {
+      "questionId": "Q009",
+      "count": "4"
+    },
+    {
+      "questionId": "Q010",
+      "count": "4"
+    },
+    {
+      "questionId": "Q011",
+      "count": "4"
+    },
+    {
+      "questionId": "Q012",
+      "count": "4"
+    },
+    {
+      "questionId": "Q013",
+      "count": "4"
+    },
+    {
+      "questionId": "Q014",
+      "count": "4"
+    },
+    {
+      "questionId": "Q015",
+      "count": "4"
+    },
+    {
+      "questionId": "Q016",
+      "count": "4"
+    },
+    {
+      "questionId": "Q017",
+      "count": "4"
+    },
+    {
+      "questionId": "Q018",
+      "count": "4"
+    },
+    {
+      "questionId": "Q019",
+      "count": "4"
+    },
+    {
+      "questionId": "Q020",
+      "count": "4"
+    },
+    {
+      "questionId": "Q021",
+      "count": "4"
+    },
+    {
+      "questionId": "Q022",
+      "count": "4"
+    },
+    {
+      "questionId": "Q023",
+      "count": "4"
+    },
+    {
+      "questionId": "Q024",
+      "count": "4"
+    },
+    {
+      "questionId": "Q025",
+      "count": "4"
+    },
+    {
+      "questionId": "Q026",
+      "count": "4"
+    },
+    {
+      "questionId": "Q027",
+      "count": "4"
+    },
+    {
+      "questionId": "Q028",
+      "count": "4"
+    },
+    {
+      "questionId": "Q029",
+      "count": "4"
+    },
+    {
+      "questionId": "Q030",
+      "count": "4"
+    }
+  ],
+  "messages": [],
+  "stdout": "questionId\tcount\nQ006\t4\nQ007\t4\nQ008\t4\nQ009\t4\nQ010\t4\nQ011\t4\nQ012\t4\nQ013\t4\nQ014\t4\nQ015\t4\nQ016\t4\nQ017\t4\nQ018\t4\nQ019\t4\nQ020\t4\nQ021\t4\nQ022\t4\nQ023\t4\nQ024\t4\nQ025\t4\nQ026\t4\nQ027\t4\nQ028\t4\nQ029\t4\nQ030\t4\n",
+  "stderr": "",
+  "execution_time_ms": 1592
+}

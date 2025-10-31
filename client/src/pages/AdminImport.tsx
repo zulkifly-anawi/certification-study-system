@@ -57,7 +57,12 @@ export default function AdminImport() {
       // Validate questions structure
       for (const q of questions) {
         if (!q.text || !q.options || !q.correctAnswer || !q.topic) {
-          toast.error("Each question must have: text, options (A-D), correctAnswer, and topic");
+          toast.error("Each question must have: text, options (A-Z), correctAnswer, and topic");
+          return;
+        }
+        // Validate correctAnswer is a single letter A-Z
+        if (!/^[A-Z]$/.test(q.correctAnswer)) {
+          toast.error(`Invalid correctAnswer '${q.correctAnswer}'. Must be a single letter A-Z`);
           return;
         }
       }
@@ -194,9 +199,11 @@ export default function AdminImport() {
                 {JSON.stringify([exampleQuestion], null, 2)}
               </pre>
               <p className="text-xs text-gray-600 mt-2">
-                Required fields: text, options (with A, B, C, D), correctAnswer, topic
+                Required fields: text, options (A-Z for standard and matching questions), correctAnswer, topic
                 <br />
                 Optional fields: explanation, difficulty (default: medium)
+                <br />
+                <span className="text-green-600 font-semibold">NEW: Now supports matching questions with options A-Z (not just A-D)!</span>
               </p>
             </div>
 
@@ -248,12 +255,12 @@ export default function AdminImport() {
             <CardTitle className="text-base">Tips for Bulk Import/Export:</CardTitle>
           </CardHeader>
           <CardContent className="space-y-2 text-sm text-gray-600">
-            <p>• Use the Export function to backup your questions or share them</p>
             <p>• You can import multiple questions at once by providing a JSON array</p>
             <p>• Make sure all required fields are present for each question</p>
             <p>• Use consistent topic names across all questions</p>
             <p>• Difficulty levels: easy, medium, hard (defaults to medium if not specified)</p>
-            <p>• Correct answer must be one of: A, B, C, or D</p>
+            <p>• Correct answer must be a single letter: A-Z (A-D for standard questions, E-Z for matching questions)</p>
+            <p>• Options can have any number of choices (A-D for standard, A-Z for matching)</p>
           </CardContent>
         </Card>
       </div>

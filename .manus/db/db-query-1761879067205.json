@@ -1,0 +1,9 @@
+{
+  "query": "DELETE q1 FROM questions q1 INNER JOIN (\n  SELECT questionId, MIN(id) as min_id FROM questions GROUP BY questionId HAVING COUNT(*) > 1\n) q2 ON q1.questionId = q2.questionId AND q1.id > q2.min_id;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 3UM4huzBRqdDojB.1697ca2f01d2 --database c8q5ZjHgoGHDk3Mrv468Kv --execute DELETE q1 FROM questions q1 INNER JOIN (\n  SELECT questionId, MIN(id) as min_id FROM questions GROUP BY questionId HAVING COUNT(*) > 1\n) q2 ON q1.questionId = q2.questionId AND q1.id > q2.min_id;",
+  "rows": [],
+  "messages": [],
+  "stdout": "",
+  "stderr": "",
+  "execution_time_ms": 1526
+}

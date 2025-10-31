@@ -1,0 +1,13 @@
+{
+  "query": "SELECT COUNT(*) as count_from_03_practice_test FROM questions WHERE text LIKE '[Real Practice Question from 03 Practice Test CAPM.pdf]%';",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 3UM4huzBRqdDojB.1697ca2f01d2 --database c8q5ZjHgoGHDk3Mrv468Kv --execute SELECT COUNT(*) as count_from_03_practice_test FROM questions WHERE text LIKE '[Real Practice Question from 03 Practice Test CAPM.pdf]%';",
+  "rows": [
+    {
+      "count_from_03_practice_test": "132"
+    }
+  ],
+  "messages": [],
+  "stdout": "count_from_03_practice_test\n132\n",
+  "stderr": "",
+  "execution_time_ms": 1532
+}

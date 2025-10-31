@@ -205,13 +205,8 @@ export const appRouter = router({
       .input(z.object({
         questions: z.array(z.object({
           text: z.string(),
-          options: z.object({
-            A: z.string(),
-            B: z.string(),
-            C: z.string(),
-            D: z.string(),
-          }),
-          correctAnswer: z.enum(['A', 'B', 'C', 'D']),
+          options: z.record(z.string(), z.string()), // Flexible options: A-D (standard) or A-Z (matching)
+          correctAnswer: z.string().regex(/^[A-Z]$/, "Must be a single letter A-Z"),
           explanation: z.string().optional(),
           topic: z.string(),
           difficulty: z.enum(['easy', 'medium', 'hard']).optional().default('medium'),
@@ -225,7 +220,7 @@ export const appRouter = router({
             return {
               questionId: uniqueId,
               text: q.text,
-              options: q.options,
+              options: q.options as Record<string, string>,
               correctAnswer: q.correctAnswer,
               explanation: q.explanation || "See course materials for detailed explanation",
               topic: q.topic,

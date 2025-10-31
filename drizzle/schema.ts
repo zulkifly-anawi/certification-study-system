@@ -25,8 +25,8 @@ export const questions = mysqlTable("questions", {
   id: int("id").autoincrement().primaryKey(),
   questionId: varchar("questionId", { length: 50 }).notNull(), // e.g., Q001, Q002, or imported_timestamp_index
   text: text("text").notNull(),
-  options: json("options").notNull().$type<{ A: string; B: string; C: string; D: string }>(),
-  correctAnswer: varchar("correctAnswer", { length: 1 }).notNull(), // A, B, C, or D
+  options: json("options").notNull().$type<Record<string, string>>(), // Supports A-D (standard) or A-Z (matching)
+  correctAnswer: varchar("correctAnswer", { length: 1 }).notNull(), // A-Z (A-D for standard, E+ for matching)
   explanation: text("explanation").notNull(),
   topic: varchar("topic", { length: 100 }).notNull(),
   difficulty: mysqlEnum("difficulty", ["easy", "medium", "hard"]).notNull(),
@@ -62,7 +62,7 @@ export const sessionAnswers = mysqlTable("sessionAnswers", {
   id: int("id").autoincrement().primaryKey(),
   sessionId: int("sessionId").notNull(),
   questionId: int("questionId").notNull(),
-  userAnswer: varchar("userAnswer", { length: 1 }).notNull(), // A, B, C, or D
+  userAnswer: varchar("userAnswer", { length: 1 }).notNull(), // A-Z (user's selected answer)
   isCorrect: boolean("isCorrect").notNull(),
   answeredAt: timestamp("answeredAt").defaultNow().notNull(),
 });

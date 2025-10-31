@@ -47,3 +47,8 @@
 - [x] Fix "Failed to import questions" error in admin import panel
 - [x] Fix Quick Stats showing cached question count after import
 - [x] Add export questions function to admin panel
+- [x] Remove duplicate questionIds (Q006-Q030) from database
+- [x] Support matching questions with more than 4 options (A-Z, not just A-D)
+- [x] Update database schema to allow any letter as correctAnswer
+- [x] Update validation in import form to accept A-Z
+- [x] Update frontend to handle matching questions with extended options

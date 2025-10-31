@@ -1,0 +1,60 @@
+{
+  "query": "SELECT id, LEFT(text, 100) as text_preview, topic FROM questions LIMIT 10;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 3UM4huzBRqdDojB.1697ca2f01d2 --database c8q5ZjHgoGHDk3Mrv468Kv --execute SELECT id, LEFT(text, 100) as text_preview, topic FROM questions LIMIT 10;",
+  "rows": [
+    {
+      "id": "1",
+      "text_preview": "Which technique is used to identify roles and the level of responsibilities?",
+      "topic": "Team Management"
+    },
+    {
+      "id": "2",
+      "text_preview": "What is an agile control method that shows where the project is going over time?",
+      "topic": "Adaptive Approaches"
+    },
+    {
+      "id": "3",
+      "text_preview": "At a requirements workshop, the attendees have stated that all of the elicited requirements are \"mus",
+      "topic": "Requirements Management"
+    },
+    {
+      "id": "4",
+      "text_preview": "A project team is working closely with the product owner to determine inputs for the scope. Due to t",
+      "topic": "Scope Management"
+    },
+    {
+      "id": "5",
+      "text_preview": "Which of the following is the first step in the project management process?",
+      "topic": "Project Management Foundations"
+    },
+    {
+      "id": "6",
+      "text_preview": "Which process involves formally accepting project deliverables?",
+      "topic": "Project Closing"
+    },
+    {
+      "id": "7",
+      "text_preview": "What is the primary purpose of the project charter?",
+      "topic": "Project Initiation"
+    },
+    {
+      "id": "8",
+      "text_preview": "What does the critical path represent in a project schedule?",
+      "topic": "Schedule Management"
+    },
+    {
+      "id": "9",
+      "text_preview": "Which of the following is NOT a key output of the Planning process group?",
+      "topic": "Project Planning"
+    },
+    {
+      "id": "10",
+      "text_preview": "What is the primary purpose of a Work Breakdown Structure (WBS)?",
+      "topic": "Scope Management"
+    }
+  ],
+  "messages": [],
+  "stdout": "id\ttext_preview\ttopic\n1\tWhich technique is used to identify roles and the level of responsibilities?\tTeam Management\n2\tWhat is an agile control method that shows where the project is going over time?\tAdaptive Approaches\n3\tAt a requirements workshop, the attendees have stated that all of the elicited requirements are \"mus\tRequirements Management\n4\tA project team is working closely with the product owner to determine inputs for the scope. Due to t\tScope Management\n5\tWhich of the following is the first step in the project management process?\tProject Management Foundations\n6\tWhich process involves formally accepting project deliverables?\tProject Closing\n7\tWhat is the primary purpose of the project charter?\tProject Initiation\n8\tWhat does the critical path represent in a project schedule?\tSchedule Management\n9\tWhich of the following is NOT a key output of the Planning process group?\tProject Planning\n10\tWhat is the primary purpose of a Work Breakdown Structure (WBS)?\tScope Management\n",
+  "stderr": "",
+  "execution_time_ms": 1558
+}

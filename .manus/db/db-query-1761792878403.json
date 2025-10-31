@@ -1,0 +1,14 @@
+{
+  "query": "SELECT COUNT(*) as total_questions, COUNT(DISTINCT questionId) as unique_questionIds FROM questions;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 3UM4huzBRqdDojB.1697ca2f01d2 --database c8q5ZjHgoGHDk3Mrv468Kv --execute SELECT COUNT(*) as total_questions, COUNT(DISTINCT questionId) as unique_questionIds FROM questions;",
+  "rows": [
+    {
+      "total_questions": "125",
+      "unique_questionIds": "125"
+    }
+  ],
+  "messages": [],
+  "stdout": "total_questions\tunique_questionIds\n125\t125\n",
+  "stderr": "",
+  "execution_time_ms": 1550
+}
