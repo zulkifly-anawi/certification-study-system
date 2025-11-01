@@ -7,7 +7,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { trpc } from "@/lib/trpc";
 import { useLocation } from "wouter";
 import { toast } from "sonner";
-import { Upload, Download, ArrowLeft, AlertCircle, CheckCircle } from "lucide-react";
+import { Upload, Download, ArrowLeft, AlertCircle, CheckCircle, Plus } from "lucide-react";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 export default function AdminImport() {
@@ -203,6 +203,33 @@ export default function AdminImport() {
                   size="lg"
                 >
                   {isExporting ? "Exporting..." : "Export"}
+                </Button>
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* Add Question Card */}
+          <Card className="bg-gradient-to-r from-purple-50 to-pink-50 border-purple-200">
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <Upload className="w-5 h-5 text-purple-600" />
+                Add New Question
+              </CardTitle>
+              <CardDescription>
+                Create a single question manually
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div className="bg-white rounded-lg p-4 border border-purple-100">
+                <p className="text-sm text-gray-600 mb-4">
+                  Add individual questions with multiple options
+                </p>
+                <Button
+                  onClick={() => setLocation("/admin/add-question")}
+                  className="w-full bg-purple-600 hover:bg-purple-700"
+                  size="lg"
+                >
+                  Add Question
                 </Button>
               </div>
             </CardContent>

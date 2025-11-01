@@ -190,3 +190,17 @@
 - [ ] Add link to certification management from admin panel
 - [ ] Test add/edit/delete operations
 - [ ] Test delete validation with certifications containing questions
+
+
+## Add Question Feature (Admin)
+- [x] Create backend createQuestion procedure with validation
+- [x] Create AdminAddQuestion.tsx page with form UI
+- [x] Add dynamic answer options (A-Z support)
+- [x] Add certification selection to form
+- [x] Add image/diagram upload support
+- [x] Add route to App.tsx for /admin/add-question
+- [x] Add link to Add Question page from admin panel
+- [x] Test adding question with single correct answer
+- [x] Test adding question with multiple options (A-D)
+- [x] Verify question appears in edit panel with correct data
+- [x] Test certification filtering for new questions

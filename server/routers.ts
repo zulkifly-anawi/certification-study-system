@@ -5,7 +5,7 @@ import { publicProcedure, protectedProcedure, adminProcedure, router } from "./_
 import { z } from "zod";
 import * as db from "./db";
 import questionBankData from "./question_bank.json";
-import { eq } from "drizzle-orm";
+import { eq, desc } from "drizzle-orm";
 import { certifications, questions } from "../drizzle/schema";
 
 // Auto-seeding disabled - questions are now managed through Admin Import Panel
@@ -390,7 +390,7 @@ export const appRouter = router({
     deleteQuestion: adminProcedure
       .input(z.object({
         id: z.number(),
-        certification: z.string().default('CAPM')
+        certification: z.string().default('CAPM'),
       }))
       .mutation(async ({ input }) => {
         try {
@@ -418,6 +418,65 @@ export const appRouter = router({
           const errorMsg = error instanceof Error ? error.message : String(error);
           console.error(`[Admin] Delete question failed: ${errorMsg}`);
           throw new Error(`Failed to delete question: ${errorMsg}`);
+        }
+      }),
+
+    createQuestion: adminProcedure
+      .input(z.object({
+        text: z.string().min(1, "Question text is required"),
+        options: z.record(z.string(), z.string()),
+        correctAnswer: z.string().min(1, "Correct answer is required"),
+        explanation: z.string().optional(),
+        topic: z.string().min(1, "Topic is required"),
+        difficulty: z.enum(["easy", "medium", "hard"]),
+        mediaUrl: z.string().optional(),
+        certification: z.string().default('CAPM'),
+      }))
+      .mutation(async ({ input }) => {
+        try {
+          const database = await db.getDb();
+          if (!database) throw new Error("Database not available");
+          
+          // Verify certification exists
+          const cert = await database.select().from(certifications).where(eq(certifications.code, input.certification)).limit(1);
+          if (cert.length === 0) {
+            throw new Error(`Certification '${input.certification}' not found`);
+          }
+          
+          // Get the next question ID for this certification
+          const lastQuestion = await database.select().from(questions)
+            .where(eq(questions.certification, input.certification))
+            .orderBy(desc(questions.id))
+            .limit(1);
+          
+          const nextId = lastQuestion.length > 0 ? lastQuestion[0].id + 1 : 1;
+          const questionId = `${input.certification}-${nextId}`;
+          
+          // Insert the new question
+          const insertData = {
+            questionId: questionId,
+            text: input.text,
+            options: input.options as Record<string, string>,
+            correctAnswer: input.correctAnswer,
+            explanation: input.explanation || "",
+            topic: input.topic,
+            difficulty: input.difficulty as "easy" | "medium" | "hard",
+            certification: input.certification,
+          } as any;
+          if (input.mediaUrl) {
+            insertData.mediaUrl = input.mediaUrl;
+          }
+          await database.insert(questions).values(insertData);
+          
+          return {
+            success: true,
+            message: "Question created successfully",
+            questionId: questionId,
+          };
+        } catch (error) {
+          const errorMsg = error instanceof Error ? error.message : String(error);
+          console.error(`[Admin] Create question failed: ${errorMsg}`);
+          throw new Error(`Failed to create question: ${errorMsg}`);
         }
       }),
 

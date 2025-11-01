@@ -11,6 +11,7 @@ import History from "./pages/History";
 import AdminImport from "./pages/AdminImport";
 import AdminEdit from "./pages/AdminEdit";
 import AdminCertifications from "./pages/AdminCertifications";
+import AdminAddQuestion from "./pages/AdminAddQuestion";
 
 function Router() {
   return (
@@ -22,6 +23,7 @@ function Router() {
       <Route path={"/admin/import"} component={AdminImport} />
       <Route path={"/admin/edit"} component={AdminEdit} />
       <Route path={"/admin/certifications"} component={AdminCertifications} />
+      <Route path={"/admin/add-question"} component={AdminAddQuestion} />
       <Route path={"/404"} component={NotFound} />
       <Route component={NotFound} />
     </Switch>
