@@ -475,19 +475,17 @@ export default function AdminEdit() {
                       <AlertDialogContent>
                         <AlertDialogHeader>
                           <AlertDialogTitle>Delete Question?</AlertDialogTitle>
-                          <AlertDialogDescription>
-                            <div className="space-y-3 mt-4">
-                              <p className="font-semibold text-foreground">Question:</p>
-                              <p className="text-sm bg-muted p-3 rounded max-h-32 overflow-y-auto">
-                                {selectedQuestion.text}
-                              </p>
-                              <p className="text-sm text-destructive font-medium">
-                                This action cannot be undone. The question will be permanently deleted.
-                              </p>
-                            </div>
-                          </AlertDialogDescription>
                         </AlertDialogHeader>
-                        <div className="flex gap-2 justify-end">
+                        <div className="space-y-3 mt-4">
+                          <div className="font-semibold text-foreground">Question:</div>
+                          <div className="text-sm bg-muted p-3 rounded max-h-32 overflow-y-auto">
+                            {selectedQuestion.text}
+                          </div>
+                          <div className="text-sm text-destructive font-medium">
+                            This action cannot be undone. The question will be permanently deleted.
+                          </div>
+                        </div>
+                        <div className="flex gap-2 justify-end mt-6">
                           <AlertDialogCancel>Cancel</AlertDialogCancel>
                           <AlertDialogAction
                             onClick={handleDeleteQuestion}
