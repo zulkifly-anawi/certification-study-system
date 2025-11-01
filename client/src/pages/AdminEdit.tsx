@@ -445,41 +445,42 @@ export default function AdminEdit() {
                   </div>
 
                   {/* Save and Delete Buttons */}
-                  <div className="flex gap-2">
+                  <div className="flex flex-col sm:flex-row gap-2 sm:gap-3">
                     <Button
                       onClick={handleSaveQuestion}
                       disabled={isSaving}
-                      className="flex-1"
+                      className="flex-1 text-xs md:text-sm px-2 md:px-4 py-2 md:py-2 h-9 md:h-10"
                     >
                       {isSaving ? (
                         <>
-                          <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-                          Saving...
+                          <Loader2 className="w-3 h-3 md:w-4 md:h-4 mr-1 md:mr-2 animate-spin flex-shrink-0" />
+                          <span className="hidden sm:inline">Saving...</span>
+                          <span className="sm:hidden">Saving</span>
                         </>
                       ) : (
                         <>
-                          <Save className="w-4 h-4 mr-2" />
-                          Save Question
+                          <Save className="w-3 h-3 md:w-4 md:h-4 mr-1 md:mr-2 flex-shrink-0" />
+                          <span className="hidden sm:inline">Save Question</span>
+                          <span className="sm:hidden">Save</span>
                         </>
                       )}
                     </Button>
                     <Button
                       onClick={() => setShowPreview(true)}
                       variant="outline"
-                      size="sm"
-                      className="gap-2"
+                      className="flex-1 sm:flex-none gap-2 text-xs md:text-sm px-2 md:px-3 py-1 md:py-2 h-9 md:h-10"
                     >
-                      <Eye className="w-4 h-4" />
-                      Preview
+                      <Eye className="w-3 h-3 md:w-4 md:h-4 flex-shrink-0" />
+                      <span className="hidden sm:inline">Preview</span>
+                      <span className="sm:hidden">View</span>
                     </Button>
                     <AlertDialog>
                       <AlertDialogTrigger asChild>
                         <Button
                           variant="destructive"
-                          size="sm"
-                          className="gap-2"
+                          className="flex-1 sm:flex-none gap-2 text-xs md:text-sm px-2 md:px-3 py-1 md:py-2 h-9 md:h-10"
                         >
-                          <Trash2 className="w-4 h-4" />
+                          <Trash2 className="w-3 h-3 md:w-4 md:h-4 flex-shrink-0" />
                           Delete
                         </Button>
                       </AlertDialogTrigger>
