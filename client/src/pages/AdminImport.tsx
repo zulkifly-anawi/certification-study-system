@@ -141,14 +141,23 @@ export default function AdminImport() {
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 p-4">
       <div className="max-w-4xl mx-auto">
         <div className="flex items-center justify-between mb-6">
-          <Button
-            variant="ghost"
-            onClick={() => setLocation("/")}
-            className="flex items-center gap-2"
-          >
-            <ArrowLeft className="w-4 h-4" />
-            Back to Home
-          </Button>
+          <div className="flex gap-2">
+            <Button
+              variant="ghost"
+              onClick={() => setLocation("/")}
+              className="flex items-center gap-2"
+            >
+              <ArrowLeft className="w-4 h-4" />
+              Back to Home
+            </Button>
+            <Button
+              variant="outline"
+              onClick={() => setLocation("/admin/certifications")}
+              className="flex items-center gap-2"
+            >
+              Manage Certifications
+            </Button>
+          </div>
           
           {certifications && certifications.length > 0 && (
             <div className="flex items-center gap-2">

@@ -6,7 +6,7 @@ import { z } from "zod";
 import * as db from "./db";
 import questionBankData from "./question_bank.json";
 import { eq } from "drizzle-orm";
-import { certifications } from "../drizzle/schema";
+import { certifications, questions } from "../drizzle/schema";
 
 // Auto-seeding disabled - questions are now managed through Admin Import Panel
 // Uncomment below to re-enable if needed
@@ -384,6 +384,90 @@ export const appRouter = router({
           const errorMsg = error instanceof Error ? error.message : String(error);
           console.error(`[Admin] Update question failed: ${errorMsg}`);
           throw new Error(`Failed to update question: ${errorMsg}`);
+        }
+      }),
+
+    addCertification: adminProcedure
+      .input(z.object({
+        code: z.string().min(1, "Code is required"),
+        name: z.string().min(1, "Name is required"),
+        description: z.string().optional(),
+      }))
+      .mutation(async ({ input }) => {
+        try {
+          const database = await db.getDb();
+          if (!database) throw new Error("Database not available");
+          
+          const existing = await database.select().from(certifications).where(eq(certifications.code, input.code)).limit(1);
+          if (existing.length > 0) {
+            throw new Error(`Certification with code '${input.code}' already exists`);
+          }
+          
+          await database.insert(certifications).values({
+            code: input.code,
+            name: input.name,
+            description: input.description,
+          });
+          
+          return { success: true, message: "Certification added successfully" };
+        } catch (error) {
+          const errorMsg = error instanceof Error ? error.message : String(error);
+          throw new Error(`Failed to add certification: ${errorMsg}`);
+        }
+      }),
+
+    updateCertification: adminProcedure
+      .input(z.object({
+        code: z.string().min(1, "Code is required"),
+        name: z.string().min(1, "Name is required"),
+        description: z.string().optional(),
+      }))
+      .mutation(async ({ input }) => {
+        try {
+          const database = await db.getDb();
+          if (!database) throw new Error("Database not available");
+          
+          await database.update(certifications)
+            .set({
+              name: input.name,
+              description: input.description,
+            })
+            .where(eq(certifications.code, input.code));
+          
+          return { success: true, message: "Certification updated successfully" };
+        } catch (error) {
+          const errorMsg = error instanceof Error ? error.message : String(error);
+          throw new Error(`Failed to update certification: ${errorMsg}`);
+        }
+      }),
+
+    deleteCertification: adminProcedure
+      .input(z.object({
+        code: z.string().min(1, "Code is required"),
+      }))
+      .mutation(async ({ input }) => {
+        try {
+          const database = await db.getDb();
+          if (!database) throw new Error("Database not available");
+          
+          const questionsCount = await database.select().from(questions)
+            .where(eq(questions.certification, input.code))
+            .limit(1);
+          
+          if (questionsCount.length > 0) {
+            throw new Error(`Cannot delete certification '${input.code}' because it has questions. Please delete all questions first.`);
+          }
+          
+          if (['CAPM', 'PSM1', 'PMP'].includes(input.code)) {
+            throw new Error(`Cannot delete built-in certification '${input.code}'`);
+          }
+          
+          await database.delete(certifications).where(eq(certifications.code, input.code));
+          
+          return { success: true, message: "Certification deleted successfully" };
+        } catch (error) {
+          const errorMsg = error instanceof Error ? error.message : String(error);
+          throw new Error(`Failed to delete certification: ${errorMsg}`);
         }
       }),
   }),

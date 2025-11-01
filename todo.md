@@ -177,3 +177,16 @@
 - [x] Pass selected certification to import mutation
 - [x] Test importing questions for different certifications
 - [x] Verify questions are tagged with correct certification
+
+
+## Certification Management Admin Page
+- [ ] Create backend procedures: addCertification, updateCertification, deleteCertification
+- [ ] Implement delete validation to check for questions
+- [ ] Create AdminCertifications.tsx page
+- [ ] Add form to create new certifications
+- [ ] Add form to edit existing certifications
+- [ ] Add delete button with confirmation dialog
+- [ ] Show error message if trying to delete certification with questions
+- [ ] Add link to certification management from admin panel
+- [ ] Test add/edit/delete operations
+- [ ] Test delete validation with certifications containing questions
