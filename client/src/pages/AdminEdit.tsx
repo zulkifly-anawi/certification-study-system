@@ -16,35 +16,16 @@ export default function AdminEdit() {
   const [, setLocation] = useLocation();
   const [questions, setQuestions] = useState<any[]>([]);
   const [selectedQuestion, setSelectedQuestion] = useState<any>(null);
-  const [isLoading, setIsLoading] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
   const [uploadingImage, setUploadingImage] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
 
-  const getAllQuestions = trpc.admin.getAllQuestionsForEdit.useQuery(undefined, { enabled: isAuthenticated && user?.role === 'admin' });
+  // Declare all hooks unconditionally
+  const getAllQuestions = trpc.admin.getAllQuestionsForEdit.useQuery(undefined, { 
+    enabled: isAuthenticated && user?.role === 'admin' 
+  });
   const updateQuestion = trpc.admin.updateQuestion.useMutation();
-
-  // Check if user is admin
-  if (!isAuthenticated || user?.role !== "admin") {
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100 p-4">
-        <Card className="max-w-md">
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <AlertCircle className="w-5 h-5 text-red-500" />
-              Access Denied
-            </CardTitle>
-            <CardDescription>You do not have permission to access this page</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <Button onClick={() => setLocation("/")} className="w-full">
-              Go to Home
-            </Button>
-          </CardContent>
-        </Card>
-      </div>
-    );
-  }
+  const uploadImage = trpc.admin.uploadQuestionImage.useMutation();
 
   useEffect(() => {
     if (getAllQuestions.data?.questions) {
@@ -59,27 +40,28 @@ export default function AdminEdit() {
       setUploadingImage(true);
       const file = e.target.files[0];
       
-      // Create FormData for file upload
-      const formData = new FormData();
-      formData.append('file', file);
-
-      // Upload to server (we'll use a simple approach - store as base64 or use S3)
-      // For now, we'll create a data URL
       const reader = new FileReader();
       reader.onload = async (event) => {
-        const dataUrl = event.target?.result as string;
-        
-        // Update the selected question with the image
-        const updatedQuestion = {
-          ...selectedQuestion,
-          mediaUrl: dataUrl,
-        };
-        setSelectedQuestion(updatedQuestion);
-        toast.success("Image loaded. Click Save to persist.");
+        try {
+          const base64Data = (event.target?.result as string).split(',')[1];
+          const result = await uploadImage.mutateAsync({
+            fileName: file.name,
+            fileData: base64Data,
+          });
+          const updatedQuestion = {
+            ...selectedQuestion,
+            mediaUrl: result.url,
+          };
+          setSelectedQuestion(updatedQuestion);
+          toast.success("Image uploaded successfully. Click Save to persist.");
+        } catch (error) {
+          toast.error("Failed to upload image to storage");
+          console.error(error);
+        }
       };
       reader.readAsDataURL(file);
     } catch (error) {
-      toast.error("Failed to upload image");
+      toast.error("Failed to process image");
       console.error(error);
     } finally {
       setUploadingImage(false);
@@ -102,7 +84,6 @@ export default function AdminEdit() {
         mediaUrl: selectedQuestion.mediaUrl,
       });
 
-      // Update the questions list
       setQuestions(questions.map(q => q.id === selectedQuestion.id ? selectedQuestion : q));
       toast.success("Question updated successfully");
     } catch (error) {
@@ -118,6 +99,28 @@ export default function AdminEdit() {
     q.topic.toLowerCase().includes(searchTerm.toLowerCase()) ||
     q.questionId.toLowerCase().includes(searchTerm.toLowerCase())
   );
+
+  // Conditional rendering instead of early return
+  if (!isAuthenticated || user?.role !== "admin") {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100 p-4">
+        <Card className="max-w-md">
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2">
+              <AlertCircle className="w-5 h-5 text-red-500" />
+              Access Denied
+            </CardTitle>
+            <CardDescription>You do not have permission to access this page</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <Button onClick={() => setLocation("/")} className="w-full">
+              Go to Home
+            </Button>
+          </CardContent>
+        </Card>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 p-4">
@@ -296,11 +299,11 @@ export default function AdminEdit() {
                       onValueChange={(value) =>
                         setSelectedQuestion({
                           ...selectedQuestion,
-                          difficulty: value,
+                          difficulty: value as "easy" | "medium" | "hard",
                         })
                       }
                     >
-                      <SelectTrigger className="mt-2">
+                      <SelectTrigger id="difficulty" className="mt-2">
                         <SelectValue />
                       </SelectTrigger>
                       <SelectContent>
@@ -311,24 +314,11 @@ export default function AdminEdit() {
                     </Select>
                   </div>
 
-                  {/* Options Preview */}
-                  <div>
-                    <Label>Options</Label>
-                    <div className="mt-2 space-y-2">
-                      {Object.entries(selectedQuestion.options).map(([key, value]) => (
-                        <div key={key} className="p-2 bg-muted rounded text-sm">
-                          <span className="font-medium">{key}.</span> {value as string}
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-
                   {/* Save Button */}
                   <Button
-                    className="w-full"
-                    size="lg"
                     onClick={handleSaveQuestion}
                     disabled={isSaving}
+                    className="w-full"
                   >
                     {isSaving ? (
                       <>
@@ -338,7 +328,7 @@ export default function AdminEdit() {
                     ) : (
                       <>
                         <Save className="w-4 h-4 mr-2" />
-                        Save Changes
+                        Save Question
                       </>
                     )}
                   </Button>
@@ -346,10 +336,8 @@ export default function AdminEdit() {
               </Card>
             ) : (
               <Card>
-                <CardContent className="pt-8">
-                  <div className="text-center text-muted-foreground">
-                    <p>Select a question from the list to edit</p>
-                  </div>
+                <CardContent className="pt-6 text-center text-muted-foreground">
+                  Select a question to edit
                 </CardContent>
               </Card>
             )}

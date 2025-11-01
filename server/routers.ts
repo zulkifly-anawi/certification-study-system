@@ -293,6 +293,38 @@ export const appRouter = router({
         }
       }),
 
+    uploadQuestionImage: adminProcedure
+      .input(z.object({
+        fileName: z.string(),
+        fileData: z.string(), // base64 encoded file data
+      }))
+      .mutation(async ({ input }) => {
+        try {
+          const { storagePut } = await import('./storage');
+          
+          // Convert base64 to buffer
+          const buffer = Buffer.from(input.fileData, 'base64');
+          
+          // Generate unique file key
+          const timestamp = Date.now();
+          const randomSuffix = Math.random().toString(36).substr(2, 9);
+          const fileKey = `questions/images/${timestamp}-${randomSuffix}-${input.fileName}`;
+          
+          // Upload to S3
+          const { url } = await storagePut(fileKey, buffer, 'image/jpeg');
+          
+          return {
+            success: true,
+            url,
+            message: "Image uploaded successfully",
+          };
+        } catch (error) {
+          const errorMsg = error instanceof Error ? error.message : String(error);
+          console.error(`[Admin] Image upload failed: ${errorMsg}`);
+          throw new Error(`Failed to upload image: ${errorMsg}`);
+        }
+      }),
+
     updateQuestion: adminProcedure
       .input(z.object({
         id: z.number(),
