@@ -98,27 +98,29 @@ export default function AdminCertifications() {
     <div className="min-h-screen bg-gray-50">
       <div className="max-w-6xl mx-auto p-6">
         {/* Header */}
-        <div className="flex items-center justify-between mb-8">
-          <div className="flex items-center gap-4">
+        <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 md:gap-6 mb-8">
+          <div className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4 min-w-0">
             <Button
               variant="outline"
               size="sm"
               onClick={() => navigate("/admin/import")}
-              className="gap-2"
+              className="gap-2 text-xs md:text-sm px-2 md:px-3 py-1 md:py-2 h-9 w-fit"
             >
-              <ArrowLeft className="w-4 h-4" />
-              Back to Admin
+              <ArrowLeft className="w-3 h-3 md:w-4 md:h-4 flex-shrink-0" />
+              <span className="hidden sm:inline">Back to Admin</span>
+              <span className="sm:hidden">Back</span>
             </Button>
-            <div>
-              <h1 className="text-3xl font-bold">Manage Certifications</h1>
-              <p className="text-gray-600 mt-1">Add, edit, or delete certification programs</p>
+            <div className="min-w-0">
+              <h1 className="text-2xl md:text-3xl font-bold truncate">Manage Certifications</h1>
+              <p className="text-xs md:text-sm text-gray-600 mt-1 truncate">Add, edit, or delete certification programs</p>
             </div>
           </div>
           <Dialog open={isAddOpen} onOpenChange={setIsAddOpen}>
             <DialogTrigger asChild>
-              <Button className="gap-2">
-                <Plus className="w-4 h-4" />
-                Add Certification
+              <Button className="gap-2 text-xs md:text-sm px-2 md:px-3 py-1 md:py-2 h-9 w-full sm:w-fit">
+                <Plus className="w-3 h-3 md:w-4 md:h-4 flex-shrink-0" />
+                <span className="hidden sm:inline">Add Certification</span>
+                <span className="sm:hidden">Add</span>
               </Button>
             </DialogTrigger>
             <DialogContent>
