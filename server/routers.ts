@@ -95,11 +95,11 @@ export const appRouter = router({
       }),
 
     // Submit an answer for a question in a session
-    submitAnswer: protectedProcedure
+      submitAnswer: protectedProcedure
       .input(z.object({
         sessionId: z.number(),
         questionId: z.number(),
-        userAnswer: z.string().length(1),
+        userAnswer: z.string().regex(/^[A-Z](,[A-Z])*$/, "Must be a single letter A-Z or comma-separated (e.g., 'A,C')"),
       }))
       .mutation(async ({ ctx, input }) => {
         // Get the question to check if answer is correct
@@ -109,8 +109,13 @@ export const appRouter = router({
         }
 
         // Support both single and multiple correct answers (e.g., 'A' or 'A,C')
-        const correctAnswers = question.correctAnswer.split(',');
-        const isCorrect = correctAnswers.includes(input.userAnswer);
+        // Also support user selecting multiple answers (e.g., 'A,C')
+        const correctAnswers = new Set(question.correctAnswer.split(',').map(a => a.trim()));
+        const userAnswers = new Set(input.userAnswer.split(',').map(a => a.trim()));
+        
+        // Check if user answers match correct answers exactly (order-independent)
+        const isCorrect = correctAnswers.size === userAnswers.size && 
+                         Array.from(correctAnswers).every(a => userAnswers.has(a));
 
         // Save the answer
         await db.saveSessionAnswer({

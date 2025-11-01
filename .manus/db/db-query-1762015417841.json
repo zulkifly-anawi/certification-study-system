@@ -1,0 +1,9 @@
+{
+  "query": "UPDATE questions SET correctAnswer = 'A,B' WHERE id = 1 LIMIT 1;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 3UM4huzBRqdDojB.1697ca2f01d2 --database c8q5ZjHgoGHDk3Mrv468Kv --execute UPDATE questions SET correctAnswer = 'A,B' WHERE id = 1 LIMIT 1;",
+  "rows": [],
+  "messages": [],
+  "stdout": "",
+  "stderr": "",
+  "execution_time_ms": 1646
+}

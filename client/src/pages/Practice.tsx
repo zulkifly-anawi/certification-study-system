@@ -2,6 +2,7 @@ import { useAuth } from "@/_core/hooks/useAuth";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
@@ -21,6 +22,7 @@ export default function Practice() {
   const [started, setStarted] = useState(false);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [selectedAnswer, setSelectedAnswer] = useState<string>("");
+  const [selectedAnswers, setSelectedAnswers] = useState<Set<string>>(new Set());
   const [showFeedback, setShowFeedback] = useState(false);
   const [feedback, setFeedback] = useState<{ isCorrect: boolean; correctAnswer: string; explanation: string } | null>(null);
   const [sessionId, setSessionId] = useState<number | null>(null);
@@ -82,13 +84,17 @@ export default function Practice() {
   };
 
   const handleSubmitAnswer = async () => {
-    if (!selectedAnswer || !sessionId) return;
+    const currentQuestion = questions[currentQuestionIndex];
+    const isMultiAnswer = currentQuestion.correctAnswer.includes(',');
+    const answer = isMultiAnswer ? Array.from(selectedAnswers).sort().join(',') : selectedAnswer;
+    
+    if (!answer || !sessionId) return;
 
     try {
       const result = await submitAnswer.mutateAsync({
         sessionId,
         questionId: questions[currentQuestionIndex].id,
-        userAnswer: selectedAnswer,
+        userAnswer: answer,
       });
 
       setFeedback(result);
@@ -103,6 +109,7 @@ export default function Practice() {
     if (currentQuestionIndex < questions.length - 1) {
       setCurrentQuestionIndex(currentQuestionIndex + 1);
       setSelectedAnswer("");
+      setSelectedAnswers(new Set());
       setShowFeedback(false);
       setFeedback(null);
     } else {
@@ -308,31 +315,82 @@ export default function Practice() {
                 />
               </div>
             )}
-            <RadioGroup value={selectedAnswer} onValueChange={setSelectedAnswer} disabled={showFeedback}>
-              {Object.entries(currentQuestion.options).map(([key, value]) => (
-                <div
-                  key={key}
-                  className={`flex items-start space-x-3 p-4 rounded-lg border-2 transition-colors ${
-                    showFeedback && key === feedback?.correctAnswer
-                      ? "border-green-500 bg-green-50"
-                      : showFeedback && key === selectedAnswer && !feedback?.isCorrect
-                      ? "border-red-500 bg-red-50"
-                      : "border-border hover:border-primary"
-                  }`}
-                >
-                  <RadioGroupItem value={key} id={key} className="mt-1" />
-                  <Label htmlFor={key} className="flex-1 cursor-pointer">
-                    <span className="font-medium">{key}.</span> {value as string}
-                  </Label>
-                  {showFeedback && key === feedback?.correctAnswer && (
-                    <CheckCircle2 className="w-5 h-5 text-green-600" />
-                  )}
-                  {showFeedback && key === selectedAnswer && !feedback?.isCorrect && (
-                    <XCircle className="w-5 h-5 text-red-600" />
-                  )}
-                </div>
-              ))}
-            </RadioGroup>
+            {currentQuestion.correctAnswer.includes(',') ? (
+              // Multiple answer selection with checkboxes
+              <div className="space-y-3">
+                {Object.entries(currentQuestion.options).map(([key, value]) => {
+                  const isSelected = selectedAnswers.has(key);
+                  const correctAnswers = feedback?.correctAnswer.split(',') || [];
+                  const isCorrectAnswer = correctAnswers.includes(key);
+                  
+                  return (
+                    <div
+                      key={key}
+                      className={`flex items-start space-x-3 p-4 rounded-lg border-2 transition-colors ${
+                        showFeedback && isCorrectAnswer
+                          ? "border-green-500 bg-green-50"
+                          : showFeedback && isSelected && !feedback?.isCorrect
+                          ? "border-red-500 bg-red-50"
+                          : "border-border hover:border-primary"
+                      }`}
+                    >
+                      <Checkbox
+                        id={key}
+                        checked={isSelected}
+                        onCheckedChange={(checked: boolean | 'indeterminate') => {
+                          if (checked === 'indeterminate') return;
+                          const newAnswers = new Set(selectedAnswers);
+                          if (checked) {
+                            newAnswers.add(key);
+                          } else {
+                            newAnswers.delete(key);
+                          }
+                          setSelectedAnswers(newAnswers);
+                        }}
+                        disabled={showFeedback}
+                        className="mt-1"
+                      />
+                      <Label htmlFor={key} className="flex-1 cursor-pointer">
+                        <span className="font-medium">{key}.</span> {value as string}
+                      </Label>
+                      {showFeedback && isCorrectAnswer && (
+                        <CheckCircle2 className="w-5 h-5 text-green-600" />
+                      )}
+                      {showFeedback && isSelected && !feedback?.isCorrect && (
+                        <XCircle className="w-5 h-5 text-red-600" />
+                      )}
+                    </div>
+                  );
+                })}
+              </div>
+            ) : (
+              // Single answer selection with radio buttons
+              <RadioGroup value={selectedAnswer} onValueChange={setSelectedAnswer} disabled={showFeedback}>
+                {Object.entries(currentQuestion.options).map(([key, value]) => (
+                  <div
+                    key={key}
+                    className={`flex items-start space-x-3 p-4 rounded-lg border-2 transition-colors ${
+                      showFeedback && key === feedback?.correctAnswer
+                        ? "border-green-500 bg-green-50"
+                        : showFeedback && key === selectedAnswer && !feedback?.isCorrect
+                        ? "border-red-500 bg-red-50"
+                        : "border-border hover:border-primary"
+                    }`}
+                  >
+                    <RadioGroupItem value={key} id={key} className="mt-1" />
+                    <Label htmlFor={key} className="flex-1 cursor-pointer">
+                      <span className="font-medium">{key}.</span> {value as string}
+                    </Label>
+                    {showFeedback && key === feedback?.correctAnswer && (
+                      <CheckCircle2 className="w-5 h-5 text-green-600" />
+                    )}
+                    {showFeedback && key === selectedAnswer && !feedback?.isCorrect && (
+                      <XCircle className="w-5 h-5 text-red-600" />
+                    )}
+                  </div>
+                ))}
+              </RadioGroup>
+            )}
 
             {showFeedback && feedback && (
               <div className={`p-4 rounded-lg ${feedback.isCorrect ? "bg-green-50 border border-green-200" : "bg-red-50 border border-red-200"}`}>
