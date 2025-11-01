@@ -245,7 +245,8 @@ export const appRouter = router({
           topic: z.string(),
           difficulty: z.enum(['easy', 'medium', 'hard']).optional().default('medium'),
           // correctAnswer can be single or multiple (e.g., 'A' or 'A,C')
-        }))
+        })),
+        certification: z.string().default('CAPM')
       }))
       .mutation(async ({ input }) => {
         try {
@@ -260,6 +261,7 @@ export const appRouter = router({
               explanation: q.explanation || "See course materials for detailed explanation",
               topic: q.topic,
               difficulty: q.difficulty as "easy" | "medium" | "hard",
+              certification: input.certification,
             };
           });
 

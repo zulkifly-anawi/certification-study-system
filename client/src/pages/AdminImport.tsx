@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useAuth } from "@/_core/hooks/useAuth";
+import { useCertification } from "@/contexts/CertificationContext";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Textarea } from "@/components/ui/textarea";
@@ -10,12 +11,13 @@ import { Upload, Download, ArrowLeft, AlertCircle, CheckCircle } from "lucide-re
 
 export default function AdminImport() {
   const { user, isAuthenticated } = useAuth();
+  const { selectedCertification } = useCertification();
   const [, setLocation] = useLocation();
   const [jsonInput, setJsonInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [isExporting, setIsExporting] = useState(false);
   const importMutation = trpc.admin.importQuestions.useMutation();
-  const exportQuery = trpc.admin.exportQuestions.useQuery();
+  const exportQuery = trpc.admin.exportQuestions.useQuery({ certification: selectedCertification });
 
   // Check if user is admin
   if (!isAuthenticated || user?.role !== "admin") {
@@ -67,7 +69,7 @@ export default function AdminImport() {
         }
       }
 
-      await importMutation.mutateAsync({ questions });
+      await importMutation.mutateAsync({ questions, certification: selectedCertification });
       toast.success(`Successfully imported ${questions.length} questions!`);
       setJsonInput("");
       // Invalidate export query to refresh the count
