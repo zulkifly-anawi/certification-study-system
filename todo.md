@@ -70,3 +70,12 @@
 - [x] Build admin edit panel with question list and edit form
 - [x] Implement image upload to S3 with public URL generation
 - [x] Test media display on all question types (multiple choice, matching, multiple answers)
+
+## Topic-Based Filtering Feature
+- [x] Extract all unique topics from questions database
+- [x] Create backend procedure to fetch all available topics
+- [x] Add topic selection UI to Practice page
+- [x] Create backend procedure to fetch questions filtered by topic
+- [x] Implement topic filtering in practice session
+- [x] Display selected topic in practice session header
+- [x] Test topic filtering with various topics
