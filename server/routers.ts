@@ -178,9 +178,12 @@ export const appRouter = router({
 
     // Get user's session history
     getHistory: protectedProcedure
-      .input(z.object({ limit: z.number().optional().default(10) }))
+      .input(z.object({ 
+        limit: z.number().optional().default(10),
+        certification: z.string().default('CAPM')
+      }))
       .query(async ({ ctx, input }) => {
-        return await db.getUserSessions(ctx.user.id, input.limit);
+        return await db.getUserSessions(ctx.user.id, input.limit, input.certification);
       }),
 
     // Get details of a specific session
@@ -198,9 +201,12 @@ export const appRouter = router({
   progress: router({
     // Get user's overall statistics
     getStats: protectedProcedure
-      .query(async ({ ctx }) => {
-        const stats = await db.getUserStats(ctx.user.id);
-        const topicProgress = await db.getUserTopicProgress(ctx.user.id);
+      .input(z.object({ 
+        certification: z.string().default('CAPM')
+      }))
+      .query(async ({ ctx, input }) => {
+        const stats = await db.getUserStats(ctx.user.id, input.certification);
+        const topicProgress = await db.getUserTopicProgress(ctx.user.id, input.certification);
         
         return {
           ...stats,
@@ -210,15 +216,21 @@ export const appRouter = router({
 
     // Get user's progress by topic
     getByTopic: protectedProcedure
-      .query(async ({ ctx }) => {
-        return await db.getUserTopicProgress(ctx.user.id);
+      .input(z.object({ 
+        certification: z.string().default('CAPM')
+      }))
+      .query(async ({ ctx, input }) => {
+        return await db.getUserTopicProgress(ctx.user.id, input.certification);
       }),
 
     // Get weak topics (below threshold accuracy)
     getWeakTopics: protectedProcedure
-      .input(z.object({ threshold: z.number().optional().default(75) }))
+      .input(z.object({ 
+        threshold: z.number().optional().default(75),
+        certification: z.string().default('CAPM')
+      }))
       .query(async ({ ctx, input }) => {
-        return await db.getWeakTopics(ctx.user.id, input.threshold);
+        return await db.getWeakTopics(ctx.user.id, input.threshold, input.certification);
       }),
   }),
 
@@ -267,9 +279,12 @@ export const appRouter = router({
       }),
 
     exportQuestions: adminProcedure
-      .query(async () => {
+      .input(z.object({ 
+        certification: z.string().default('CAPM')
+      }))
+      .query(async ({ input }) => {
         try {
-          const allQuestions = await db.getAllQuestions();
+          const allQuestions = await db.getAllQuestions(input.certification);
           
           const formattedQuestions = allQuestions.map(q => ({
             text: q.text,
@@ -294,9 +309,12 @@ export const appRouter = router({
       }),
 
     getAllQuestionsForEdit: adminProcedure
-      .query(async () => {
+      .input(z.object({ 
+        certification: z.string().default('CAPM')
+      }))
+      .query(async ({ input }) => {
         try {
-          const allQuestions = await db.getAllQuestions();
+          const allQuestions = await db.getAllQuestions(input.certification);
           return {
             success: true,
             questions: allQuestions,

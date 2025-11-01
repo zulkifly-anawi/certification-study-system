@@ -1,4 +1,5 @@
 import { useAuth } from "@/_core/hooks/useAuth";
+import { useCertification } from "@/contexts/CertificationContext";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -13,6 +14,7 @@ import { useState, useEffect } from "react";
 
 export default function AdminEdit() {
   const { user, isAuthenticated } = useAuth();
+  const { selectedCertification } = useCertification();
   const [, setLocation] = useLocation();
   const [questions, setQuestions] = useState<any[]>([]);
   const [selectedQuestion, setSelectedQuestion] = useState<any>(null);
@@ -21,7 +23,7 @@ export default function AdminEdit() {
   const [searchTerm, setSearchTerm] = useState("");
 
   // Declare all hooks unconditionally
-  const getAllQuestions = trpc.admin.getAllQuestionsForEdit.useQuery(undefined, { 
+  const getAllQuestions = trpc.admin.getAllQuestionsForEdit.useQuery({ certification: selectedCertification }, { 
     enabled: isAuthenticated && user?.role === 'admin' 
   });
   const updateQuestion = trpc.admin.updateQuestion.useMutation();

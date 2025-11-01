@@ -1,4 +1,5 @@
 import { useAuth } from "@/_core/hooks/useAuth";
+import { useCertification } from "@/contexts/CertificationContext";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { trpc } from "@/lib/trpc";
@@ -7,9 +8,10 @@ import { useLocation } from "wouter";
 
 export default function History() {
   const { isAuthenticated } = useAuth();
+  const { selectedCertification } = useCertification();
   const [, setLocation] = useLocation();
   
-  const sessions = trpc.sessions.getHistory.useQuery({ limit: 20 }, { enabled: isAuthenticated });
+  const sessions = trpc.sessions.getHistory.useQuery({ limit: 20, certification: selectedCertification }, { enabled: isAuthenticated });
 
   if (!isAuthenticated) {
     return (

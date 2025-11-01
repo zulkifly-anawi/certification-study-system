@@ -192,14 +192,17 @@ export async function updateSession(sessionId: number, updates: Partial<InsertSe
     .where(eq(sessions.id, sessionId));
 }
 
-export async function getUserSessions(userId: number, limit: number = 10) {
+export async function getUserSessions(userId: number, limit: number = 10, certification: string = 'CAPM') {
   const db = await getDb();
   if (!db) return [];
 
   const result = await db
     .select()
     .from(sessions)
-    .where(eq(sessions.userId, userId))
+    .where(and(
+      eq(sessions.userId, userId),
+      eq(sessions.certification, certification)
+    ))
     .orderBy(desc(sessions.startedAt))
     .limit(limit);
 
@@ -285,20 +288,7 @@ export async function updateTopicProgress(userId: number, topic: string, isCorre
   }
 }
 
-export async function getUserTopicProgress(userId: number) {
-  const db = await getDb();
-  if (!db) return [];
-
-  const result = await db
-    .select()
-    .from(topicProgress)
-    .where(eq(topicProgress.userId, userId))
-    .orderBy(desc(topicProgress.lastPracticedAt));
-
-  return result;
-}
-
-export async function getWeakTopics(userId: number, threshold: number = 75) {
+export async function getUserTopicProgress(userId: number, certification: string = 'CAPM') {
   const db = await getDb();
   if (!db) return [];
 
@@ -307,6 +297,23 @@ export async function getWeakTopics(userId: number, threshold: number = 75) {
     .from(topicProgress)
     .where(and(
       eq(topicProgress.userId, userId),
+      eq(topicProgress.certification, certification)
+    ))
+    .orderBy(desc(topicProgress.lastPracticedAt));
+
+  return result;
+}
+
+export async function getWeakTopics(userId: number, threshold: number = 75, certification: string = 'CAPM') {
+  const db = await getDb();
+  if (!db) return [];
+
+  const result = await db
+    .select()
+    .from(topicProgress)
+    .where(and(
+      eq(topicProgress.userId, userId),
+      eq(topicProgress.certification, certification),
       sql`${topicProgress.accuracy} < ${threshold}`
     ))
     .orderBy(topicProgress.accuracy);
@@ -316,7 +323,7 @@ export async function getWeakTopics(userId: number, threshold: number = 75) {
 
 // ============ Statistics Functions ============
 
-export async function getUserStats(userId: number) {
+export async function getUserStats(userId: number, certification: string = 'CAPM') {
   const db = await getDb();
   if (!db) return null;
 
@@ -329,7 +336,10 @@ export async function getUserStats(userId: number) {
       avgScore: sql<number>`COALESCE(AVG(${sessions.score}), 0)`,
     })
     .from(sessions)
-    .where(eq(sessions.userId, userId));
+    .where(and(
+      eq(sessions.userId, userId),
+      eq(sessions.certification, certification)
+    ));
 
   const result = sessionStats[0];
   return result ? {
@@ -345,13 +355,14 @@ export async function getUserStats(userId: number) {
   };
 }
 
-export async function getAllQuestions() {
+export async function getAllQuestions(certification: string = 'CAPM') {
   const db = await getDb();
   if (!db) return [];
 
   const result = await db
     .select()
     .from(questions)
+    .where(eq(questions.certification, certification))
     .orderBy(questions.topic, questions.difficulty);
 
   return result;

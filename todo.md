@@ -108,14 +108,46 @@
 
 
 ## Phase 2: Frontend Certification Selector
-- [ ] Create context/state for selected certification
-- [ ] Add certification selector dropdown to home page
-- [ ] Fetch available certifications from backend
-- [ ] Display certification selector with CAPM as default
-- [ ] Update Practice page to use selected certification
-- [ ] Update Quiz page to use selected certification
-- [ ] Update Exam page to use selected certification
-- [ ] Update Topic Study to use selected certification
-- [ ] Update Progress Dashboard to filter by certification
-- [ ] Update Session History to filter by certification
-- [ ] Test certification selector with all practice modes
+- [x] Create context/state for selected certification
+- [x] Add certification selector dropdown to home page
+- [x] Fetch available certifications from backend
+- [x] Display certification selector with CAPM as default
+- [x] Update Practice page to use selected certification
+- [x] Update Quiz page to use selected certification
+- [x] Update Exam page to use selected certification
+- [x] Update Topic Study to use selected certification
+- [x] Update Progress Dashboard to filter by certification
+- [x] Update Session History to filter by certification
+- [x] Test certification selector with all practice modes
+## Phase 3: Progress Dashboard and Session History Filtering
+- [x] Update Progress page to use useCertification hook
+- [x] Update progress.getStats procedure to accept certification parameter
+- [x] Update progress.getWeakTopics procedure to accept certification parameter
+- [x] Update Session History page to use useCertification hook
+- [x] Update sessions.getHistory procedure to accept certification parameter
+- [x] Update AdminEdit to filter questions by certification
+- [x] Update getAllQuestionsForEdit to accept certification parameter
+- [x] Update exportQuestions to accept certification parameter
+- [x] Update getUserSessions to filter by certification
+- [x] Update getUserStats to filter by certification
+- [x] Update getUserTopicProgress to filter by certification
+- [x] Update getWeakTopics to filter by certification
+- [x] Update getAllQuestions to filter by certification
+- [ ] Test progress filtering with different certifications
+- [ ] Test session history filtering with different certificationsarameter
+- [x] Update getUserSessions to filter by certification
+- [x] Update getUserStats to filter by certification
+- [x] Update getUserTopicProgress to filter by certification
+- [x] Update getWeakTopics to filter by certification
+- [x] Update getAllQuestions to filter by certification
+- [ ] Test progress filtering with different certifications
+- [ ] Test session history filtering with different certifications
+
+## Phase 3 Completion Notes
+- All progress dashboard queries now filter by certification
+- Session history queries now filter by certification
+- Admin panel now filters questions by certification
+- All database helper functions updated to accept certification parameter
+- All tRPC procedures updated to accept certification parameter
+- Frontend pages (Progress, History, AdminEdit) now use CertificationContext
+- Backward compatibility maintained - defaults to CAPM certification
