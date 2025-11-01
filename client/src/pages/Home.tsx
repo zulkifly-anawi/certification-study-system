@@ -118,55 +118,65 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50">
       {/* Header */}
-      <header className="bg-white border-b shadow-sm">
-        <div className="container py-4 flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 bg-primary rounded-lg flex items-center justify-center">
-              <BookOpen className="w-6 h-6 text-primary-foreground" />
-            </div>
-            <div>
-              <h1 className="text-xl font-bold text-foreground">Cert Study System</h1>
-              <p className="text-sm text-muted-foreground">
-                {certifications?.find(c => c.code === selectedCertification)?.name || 'Certification'} Prep
-              </p>
-            </div>
-          </div>
-          <div className="flex items-center gap-4">
-            {certifications && certifications.length > 0 && (
-              <div className="flex items-center gap-2">
-                <label className="text-sm font-medium">Certification:</label>
-                <Select value={selectedCertification} onValueChange={setSelectedCertification}>
-                  <SelectTrigger className="w-40">
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {certifications.map((cert) => (
-                      <SelectItem key={cert.code} value={cert.code}>
-                        {cert.name}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
+      <header className="bg-white border-b shadow-sm sticky top-0 z-50">
+        <div className="w-full px-4 md:px-0 md:container py-3 md:py-4">
+          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3 md:gap-4">
+            {/* Logo and Title */}
+            <div className="flex items-center gap-3 min-w-0">
+              <div className="w-10 h-10 bg-primary rounded-lg flex items-center justify-center flex-shrink-0">
+                <BookOpen className="w-6 h-6 text-primary-foreground" />
               </div>
-            )}
-            <span className="text-sm text-muted-foreground">Welcome, {user?.name}</span>
-            {user?.role === 'admin' && (
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={() => setLocation('/admin/import')}
-                className="flex items-center gap-2"
-              >
-                <Settings className="w-4 h-4" />
-                Admin
-              </Button>
-            )}
+              <div className="min-w-0">
+                <h1 className="text-lg md:text-xl font-bold text-foreground truncate">Cert Study System</h1>
+                <p className="text-xs md:text-sm text-muted-foreground truncate">
+                  {certifications?.find(c => c.code === selectedCertification)?.name || 'Certification'} Prep
+                </p>
+              </div>
+            </div>
+            
+            {/* Right Section */}
+            <div className="flex flex-col sm:flex-row sm:items-center gap-3 md:gap-4">
+              {/* Certification Selector */}
+              {certifications && certifications.length > 0 && (
+                <div className="flex items-center gap-2 min-w-0">
+                  <label className="text-xs md:text-sm font-medium whitespace-nowrap">Certification:</label>
+                  <Select value={selectedCertification} onValueChange={setSelectedCertification}>
+                    <SelectTrigger className="w-32 md:w-40 text-xs md:text-sm h-9">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {certifications.map((cert) => (
+                        <SelectItem key={cert.code} value={cert.code}>
+                          {cert.name}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+              )}
+              
+              {/* User Info and Admin Button */}
+              <div className="flex items-center gap-2 md:gap-3">
+                <span className="text-xs md:text-sm text-muted-foreground truncate">Welcome, {user?.name?.split(' ')[0]}</span>
+                {user?.role === 'admin' && (
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => setLocation('/admin/import')}
+                    className="flex items-center gap-1 md:gap-2 text-xs md:text-sm px-2 md:px-3 py-1 md:py-2 h-9"
+                  >
+                    <Settings className="w-3 h-3 md:w-4 md:h-4 flex-shrink-0" />
+                    <span className="hidden md:inline">Admin</span>
+                  </Button>
+                )}
+              </div>
+            </div>
           </div>
         </div>
       </header>
 
       {/* Main Content */}
-      <main className="container py-8">
+      <main className="w-full px-4 md:px-0 md:container py-8">
         <div className="max-w-5xl mx-auto">
           <div className="text-center mb-8">
             <h2 className="text-3xl font-bold text-foreground mb-2">
