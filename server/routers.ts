@@ -44,25 +44,32 @@ export const appRouter = router({
   questions: router({
     // Get random questions for practice
     getRandom: protectedProcedure
-      .input(z.object({ count: z.number().min(1).max(150) }))
+      .input(z.object({ 
+        count: z.number().min(1).max(150),
+        certification: z.string().default('CAPM')
+      }))
       .query(async ({ input }) => {
-        return await db.getRandomQuestions(input.count);
+        return await db.getRandomQuestions(input.count, input.certification);
       }),
 
     // Get questions by topic
     getByTopic: protectedProcedure
       .input(z.object({ 
         topic: z.string(),
-        count: z.number().min(1).max(150)
+        count: z.number().min(1).max(150),
+        certification: z.string().default('CAPM')
       }))
       .query(async ({ input }) => {
-        return await db.getQuestionsByTopic(input.topic, input.count);
+        return await db.getQuestionsByTopic(input.topic, input.count, input.certification);
       }),
 
     // Get all available topics
     getTopics: protectedProcedure
-      .query(async () => {
-        return await db.getAllTopics();
+      .input(z.object({ 
+        certification: z.string().default('CAPM')
+      }).optional())
+      .query(async ({ input }) => {
+        return await db.getAllTopics(input?.certification || 'CAPM');
       }),
 
     // Get a specific question by ID
@@ -80,10 +87,12 @@ export const appRouter = router({
         sessionType: z.enum(["practice", "quiz", "exam", "topic"]),
         topic: z.string().optional(),
         totalQuestions: z.number(),
+        certification: z.string().default('CAPM'),
       }))
       .mutation(async ({ ctx, input }) => {
         const sessionId = await db.createSession({
           userId: ctx.user.id,
+          certification: input.certification,
           sessionType: input.sessionType,
           topic: input.topic || null,
           totalQuestions: input.totalQuestions,

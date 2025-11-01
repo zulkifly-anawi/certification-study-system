@@ -19,11 +19,12 @@ export type User = typeof users.$inferSelect;
 export type InsertUser = typeof users.$inferInsert;
 
 /**
- * Question bank table storing all CAPM practice questions
+ * Question bank table storing all practice questions for multiple certifications
  */
 export const questions = mysqlTable("questions", {
   id: int("id").autoincrement().primaryKey(),
   questionId: varchar("questionId", { length: 50 }).notNull(), // e.g., Q001, Q002, or imported_timestamp_index
+  certification: varchar("certification", { length: 50 }).notNull().default("CAPM"), // CAPM, PSM1, PMP, etc.
   text: text("text").notNull(),
   options: json("options").notNull().$type<Record<string, string>>(), // Supports A-D (standard) or A-Z (matching)
   correctAnswer: varchar("correctAnswer", { length: 50 }).notNull(), // A-Z or comma-separated (e.g., 'A', 'A,C', 'A,B,D')
@@ -43,6 +44,7 @@ export type InsertQuestion = typeof questions.$inferInsert;
 export const sessions = mysqlTable("sessions", {
   id: int("id").autoincrement().primaryKey(),
   userId: int("userId").notNull(),
+  certification: varchar("certification", { length: 50 }).notNull().default("CAPM"),
   sessionType: mysqlEnum("sessionType", ["practice", "quiz", "exam", "topic"]).notNull(),
   topic: varchar("topic", { length: 100 }), // null for general practice, specific for topic practice
   totalQuestions: int("totalQuestions").notNull(),
@@ -72,11 +74,12 @@ export type SessionAnswer = typeof sessionAnswers.$inferSelect;
 export type InsertSessionAnswer = typeof sessionAnswers.$inferInsert;
 
 /**
- * User progress by topic - aggregated statistics
+ * User progress by topic and certification - aggregated statistics
  */
 export const topicProgress = mysqlTable("topicProgress", {
   id: int("id").autoincrement().primaryKey(),
   userId: int("userId").notNull(),
+  certification: varchar("certification", { length: 50 }).notNull().default("CAPM"),
   topic: varchar("topic", { length: 100 }).notNull(),
   totalAttempts: int("totalAttempts").notNull().default(0),
   correctAttempts: int("correctAttempts").notNull().default(0),
@@ -87,3 +90,22 @@ export const topicProgress = mysqlTable("topicProgress", {
 
 export type TopicProgress = typeof topicProgress.$inferSelect;
 export type InsertTopicProgress = typeof topicProgress.$inferInsert;
+
+/**
+ * Certifications reference table - stores available certifications
+ */
+export const certifications = mysqlTable("certifications", {
+  id: int("id").autoincrement().primaryKey(),
+  code: varchar("code", { length: 50 }).notNull().unique(), // CAPM, PSM1, PMP, etc.
+  name: varchar("name", { length: 255 }).notNull(), // CAPM Certification, Scrum Product Owner I, etc.
+  description: text("description"),
+  totalQuestions: int("totalQuestions").notNull().default(0),
+  examDuration: int("examDuration").notNull().default(180), // minutes
+  passingScore: int("passingScore").notNull().default(70), // percentage
+  isActive: boolean("isActive").notNull().default(true),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export type Certification = typeof certifications.$inferSelect;
+export type InsertCertification = typeof certifications.$inferInsert;

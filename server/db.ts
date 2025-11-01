@@ -119,40 +119,42 @@ export async function seedQuestions(questionList: InsertQuestion[]) {
   }
 }
 
-export async function getRandomQuestions(count: number) {
+export async function getRandomQuestions(count: number, certification: string = 'CAPM') {
   const db = await getDb();
   if (!db) return [];
 
   const result = await db
     .select()
     .from(questions)
+    .where(eq(questions.certification, certification))
     .orderBy(sql`RAND()`)
     .limit(count);
 
   return result;
 }
 
-export async function getQuestionsByTopic(topic: string, count: number) {
+export async function getQuestionsByTopic(topic: string, count: number, certification: string = 'CAPM') {
   const db = await getDb();
   if (!db) return [];
 
   const result = await db
     .select()
     .from(questions)
-    .where(eq(questions.topic, topic))
+    .where(and(eq(questions.topic, topic), eq(questions.certification, certification)))
     .orderBy(sql`RAND()`)
     .limit(count);
 
   return result;
 }
 
-export async function getAllTopics() {
+export async function getAllTopics(certification: string = 'CAPM') {
   const db = await getDb();
   if (!db) return [];
 
   const result = await db
     .selectDistinct({ topic: questions.topic })
-    .from(questions);
+    .from(questions)
+    .where(eq(questions.certification, certification));
 
   return result.map(r => r.topic);
 }

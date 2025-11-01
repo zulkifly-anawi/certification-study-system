@@ -89,3 +89,19 @@
 - [x] Add filter by difficulty level
 - [x] Add filter by topic in question list
 - [x] Improve question list layout with better visual hierarchy
+
+
+## Phase 1: Multi-Certification Architecture
+- [x] Add certification column to questions table with CAPM default
+- [x] Add certification column to sessions table with CAPM default
+- [x] Add certification column to progress table with CAPM default
+- [x] Create certifications reference table
+- [x] Update getRandomQuestions to filter by certification
+- [x] Update getQuestionsByTopic to filter by certification
+- [x] Update getAllTopics to filter by certification
+- [x] Update getAllQuestionsForEdit to filter by certification
+- [x] Update tRPC questions.getTopics procedure to accept certification
+- [x] Update tRPC questions.getByTopic procedure to accept certification
+- [x] Update tRPC sessions.start procedure to accept certification
+- [x] Update tRPC sessions.submit procedure to handle certification
+- [x] Test backend changes with CAPM certification
