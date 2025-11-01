@@ -220,3 +220,14 @@
 - [x] Test preview with multiple answer questions
 - [x] Test preview with image/diagram questions
 - [x] Verify preview displays exactly as it appears in practice mode
+
+
+## Security - sessionId Ownership Validation
+- [ ] Add server-side userId validation in sessions.getById procedure
+- [ ] Return error if sessionId doesn't belong to current user
+- [ ] Create SessionDetail page to display session results
+- [ ] Add sessionId ownership check before rendering session details
+- [ ] Add route for /session/:id in App.tsx
+- [ ] Test accessing other user's session (should fail)
+- [ ] Test accessing own session (should succeed)
+- [ ] Add error handling for unauthorized access

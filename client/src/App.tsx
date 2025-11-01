@@ -12,6 +12,7 @@ import AdminImport from "./pages/AdminImport";
 import AdminEdit from "./pages/AdminEdit";
 import AdminCertifications from "./pages/AdminCertifications";
 import AdminAddQuestion from "./pages/AdminAddQuestion";
+import SessionDetail from "./pages/SessionDetail";
 
 function Router() {
   return (
@@ -20,6 +21,7 @@ function Router() {
       <Route path={"/practice"} component={Practice} />
       <Route path={"/progress"} component={Progress} />
       <Route path={"/history"} component={History} />
+      <Route path={"/session/:sessionId"} component={SessionDetail} />
       <Route path={"/admin/import"} component={AdminImport} />
       <Route path={"/admin/edit"} component={AdminEdit} />
       <Route path={"/admin/certifications"} component={AdminCertifications} />

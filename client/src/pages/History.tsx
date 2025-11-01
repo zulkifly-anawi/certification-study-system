@@ -94,7 +94,7 @@ export default function History() {
         {sessions.data && sessions.data.length > 0 ? (
           <div className="space-y-4">
             {sessions.data.map((session: any) => (
-              <Card key={session.id} className="hover:shadow-md transition-shadow">
+              <Card key={session.id} className="hover:shadow-md transition-shadow cursor-pointer" onClick={() => setLocation(`/session/${session.id}`)}>
                 <CardContent className="p-6">
                   <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
                     <div className="flex-1">

@@ -189,9 +189,14 @@ export const appRouter = router({
     // Get details of a specific session
     getById: protectedProcedure
       .input(z.object({ sessionId: z.number() }))
-      .query(async ({ input }) => {
+      .query(async ({ ctx, input }) => {
         const session = await db.getSessionById(input.sessionId);
         if (!session) return null;
+
+        // SECURITY: Verify session belongs to current user
+        if (session.userId !== ctx.user.id) {
+          throw new Error("Unauthorized: This session does not belong to you");
+        }
 
         const answers = await db.getSessionAnswers(input.sessionId);
         return { ...session, answers };
