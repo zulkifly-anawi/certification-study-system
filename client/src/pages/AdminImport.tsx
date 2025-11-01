@@ -60,9 +60,9 @@ export default function AdminImport() {
           toast.error("Each question must have: text, options (A-Z), correctAnswer, and topic");
           return;
         }
-        // Validate correctAnswer is a single letter A-Z
-        if (!/^[A-Z]$/.test(q.correctAnswer)) {
-          toast.error(`Invalid correctAnswer '${q.correctAnswer}'. Must be a single letter A-Z`);
+        // Validate correctAnswer is a single letter or comma-separated letters A-Z
+        if (!/^[A-Z](,[A-Z])*$/.test(q.correctAnswer)) {
+          toast.error(`Invalid correctAnswer '${q.correctAnswer}'. Must be a single letter A-Z or comma-separated (e.g., 'A,C' or 'A,B,D')`);
           return;
         }
       }
@@ -259,8 +259,9 @@ export default function AdminImport() {
             <p>• Make sure all required fields are present for each question</p>
             <p>• Use consistent topic names across all questions</p>
             <p>• Difficulty levels: easy, medium, hard (defaults to medium if not specified)</p>
-            <p>• Correct answer must be a single letter: A-Z (A-D for standard questions, E-Z for matching questions)</p>
+            <p>• Correct answer can be a single letter A-Z or multiple letters separated by commas (e.g., 'A', 'A,C', or 'A,B,D')</p>
             <p>• Options can have any number of choices (A-D for standard, A-Z for matching)</p>
+            <p>• For multiple correct answers, use comma-separated format without spaces (e.g., 'A,C' not 'A, C')</p>
           </CardContent>
         </Card>
       </div>

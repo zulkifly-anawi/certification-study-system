@@ -105,17 +105,17 @@ export async function seedQuestions(questionList: InsertQuestion[]) {
   const db = await getDb();
   if (!db) throw new Error("Database not available");
 
+  // Use INSERT IGNORE to skip duplicates instead of onDuplicateKeyUpdate
+  // This avoids issues with large JSON payloads in the update clause
   for (const q of questionList) {
-    await db.insert(questions).values(q).onDuplicateKeyUpdate({
-      set: {
-        text: q.text,
-        options: q.options,
-        correctAnswer: q.correctAnswer,
-        explanation: q.explanation,
-        topic: q.topic,
-        difficulty: q.difficulty,
+    try {
+      await db.insert(questions).values(q);
+    } catch (error: any) {
+      // Ignore duplicate key errors
+      if (error?.code !== 'ER_DUP_ENTRY') {
+        throw error;
       }
-    });
+    }
   }
 }
 

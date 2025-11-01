@@ -6,7 +6,9 @@ import { z } from "zod";
 import * as db from "./db";
 import questionBankData from "./question_bank.json";
 
-// Seed questions on server start
+// Auto-seeding disabled - questions are now managed through Admin Import Panel
+// Uncomment below to re-enable if needed
+/*
 (async () => {
   try {
     const questionsToSeed = questionBankData.map((q: any) => ({
@@ -24,6 +26,7 @@ import questionBankData from "./question_bank.json";
     console.error("[Database] Failed to seed questions:", error);
   }
 })();
+*/
 
 export const appRouter = router({
   system: systemRouter,
@@ -105,7 +108,9 @@ export const appRouter = router({
           throw new Error("Question not found");
         }
 
-        const isCorrect = question.correctAnswer === input.userAnswer;
+        // Support both single and multiple correct answers (e.g., 'A' or 'A,C')
+        const correctAnswers = question.correctAnswer.split(',');
+        const isCorrect = correctAnswers.includes(input.userAnswer);
 
         // Save the answer
         await db.saveSessionAnswer({
@@ -115,6 +120,7 @@ export const appRouter = router({
           isCorrect,
           answeredAt: new Date(),
         });
+        // Note: correctAnswer can be comma-separated for multiple correct answers
 
         // Update topic progress
         await db.updateTopicProgress(ctx.user.id, question.topic, isCorrect);
@@ -206,10 +212,11 @@ export const appRouter = router({
         questions: z.array(z.object({
           text: z.string(),
           options: z.record(z.string(), z.string()), // Flexible options: A-D (standard) or A-Z (matching)
-          correctAnswer: z.string().regex(/^[A-Z]$/, "Must be a single letter A-Z"),
+          correctAnswer: z.string().regex(/^[A-Z](,[A-Z])*$/, "Must be a single letter A-Z or comma-separated (e.g., 'A,C')"),
           explanation: z.string().optional(),
           topic: z.string(),
           difficulty: z.enum(['easy', 'medium', 'hard']).optional().default('medium'),
+          // correctAnswer can be single or multiple (e.g., 'A' or 'A,C')
         }))
       }))
       .mutation(async ({ input }) => {

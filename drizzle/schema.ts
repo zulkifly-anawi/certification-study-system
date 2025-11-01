@@ -26,7 +26,7 @@ export const questions = mysqlTable("questions", {
   questionId: varchar("questionId", { length: 50 }).notNull(), // e.g., Q001, Q002, or imported_timestamp_index
   text: text("text").notNull(),
   options: json("options").notNull().$type<Record<string, string>>(), // Supports A-D (standard) or A-Z (matching)
-  correctAnswer: varchar("correctAnswer", { length: 1 }).notNull(), // A-Z (A-D for standard, E+ for matching)
+  correctAnswer: varchar("correctAnswer", { length: 50 }).notNull(), // A-Z or comma-separated (e.g., 'A', 'A,C', 'A,B,D')
   explanation: text("explanation").notNull(),
   topic: varchar("topic", { length: 100 }).notNull(),
   difficulty: mysqlEnum("difficulty", ["easy", "medium", "hard"]).notNull(),

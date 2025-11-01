@@ -52,3 +52,11 @@
 - [x] Update database schema to allow any letter as correctAnswer
 - [x] Update validation in import form to accept A-Z
 - [x] Update frontend to handle matching questions with extended options
+- [ ] Support multiple correct answers in questions (e.g., "A,C")
+- [ ] Update database schema to handle comma-separated correct answers
+- [ ] Update validation to accept comma-separated letters
+- [ ] Update grading logic to check if user answer matches any correct answer
+- [ ] Update frontend UI to support multiple answer selection
+- [ ] Fix database insert error with onDuplicateKeyUpdate for questions with large options JSON
+- [x] Disable auto-seeding of Q006-Q030 questions on server restart
+- [ ] Fix validation mismatch between preview and published versions for comma-separated answers

@@ -1,0 +1,1 @@
+ALTER TABLE `questions` MODIFY COLUMN `correctAnswer` varchar(50) NOT NULL;
