@@ -210,3 +210,13 @@
 - [x] Allow null/optional mediaUrl values in schema
 - [x] Filter out undefined values before database update
 - [x] Test updating question without mediaUrl
+
+
+## Admin Preview Question Feature
+- [x] Create QuestionPreview component to display questions like practice mode
+- [x] Add preview modal/panel to AdminEdit.tsx
+- [x] Add Preview button next to Save Question button
+- [x] Test preview with single answer questions
+- [x] Test preview with multiple answer questions
+- [x] Test preview with image/diagram questions
+- [x] Verify preview displays exactly as it appears in practice mode

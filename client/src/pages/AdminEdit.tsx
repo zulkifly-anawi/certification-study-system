@@ -9,9 +9,10 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { trpc } from "@/lib/trpc";
 import { useLocation } from "wouter";
 import { toast } from "sonner";
-import { ArrowLeft, AlertCircle, Save, Upload, X, Loader2, Trash2 } from "lucide-react";
+import { ArrowLeft, AlertCircle, Save, Upload, X, Loader2, Trash2, Eye } from "lucide-react";
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog";
 import { useState, useEffect } from "react";
+import QuestionPreview from "@/components/QuestionPreview";
 
 export default function AdminEdit() {
   const { user, isAuthenticated } = useAuth();
@@ -22,6 +23,7 @@ export default function AdminEdit() {
   const [isSaving, setIsSaving] = useState(false);
   const [uploadingImage, setUploadingImage] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
+  const [showPreview, setShowPreview] = useState(false);
 
   // Declare all hooks unconditionally
   const getAllQuestions = trpc.admin.getAllQuestionsForEdit.useQuery({ certification: selectedCertification }, { 
@@ -461,6 +463,15 @@ export default function AdminEdit() {
                         </>
                       )}
                     </Button>
+                    <Button
+                      onClick={() => setShowPreview(true)}
+                      variant="outline"
+                      size="sm"
+                      className="gap-2"
+                    >
+                      <Eye className="w-4 h-4" />
+                      Preview
+                    </Button>
                     <AlertDialog>
                       <AlertDialogTrigger asChild>
                         <Button
@@ -509,6 +520,23 @@ export default function AdminEdit() {
           </div>
         </div>
       </div>
+
+      {/* Preview Modal */}
+      {showPreview && selectedQuestion && (
+        <QuestionPreview
+          question={{
+            id: selectedQuestion.id,
+            text: selectedQuestion.text,
+            options: selectedQuestion.options,
+            correctAnswer: selectedQuestion.correctAnswer,
+            explanation: selectedQuestion.explanation,
+            topic: selectedQuestion.topic,
+            difficulty: selectedQuestion.difficulty,
+            mediaUrl: selectedQuestion.mediaUrl,
+          }}
+          onClose={() => setShowPreview(false)}
+        />
+      )}
     </div>
   );
 }
