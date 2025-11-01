@@ -94,11 +94,22 @@ export default function AdminEdit() {
     }
   };
 
-  const filteredQuestions = questions.filter(q =>
-    q.text.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    q.topic.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    q.questionId.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  // State for filters
+  const [selectedTopic, setSelectedTopic] = useState<string>("");
+  const [selectedDifficulty, setSelectedDifficulty] = useState<string>("");
+
+  // Get unique topics and difficulties for filters
+  const uniqueTopics = Array.from(new Set(questions.map(q => q.topic))).sort();
+  const difficulties = ["easy", "medium", "hard"];
+
+  const filteredQuestions = questions.filter(q => {
+    const matchesSearch = q.text.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      q.topic.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      q.questionId.toLowerCase().includes(searchTerm.toLowerCase());
+    const matchesTopic = !selectedTopic || q.topic === selectedTopic;
+    const matchesDifficulty = !selectedDifficulty || q.difficulty === selectedDifficulty;
+    return matchesSearch && matchesTopic && matchesDifficulty;
+  });
 
   // Conditional rendering instead of early return
   if (!isAuthenticated || user?.role !== "admin") {
@@ -151,22 +162,89 @@ export default function AdminEdit() {
                   onChange={(e) => setSearchTerm(e.target.value)}
                 />
 
-                <div className="space-y-2 max-h-96 overflow-y-auto">
-                  {filteredQuestions.map((q) => (
-                    <button
-                      key={q.id}
-                      onClick={() => setSelectedQuestion(q)}
-                      className={`w-full text-left p-3 rounded-lg border-2 transition-colors ${
-                        selectedQuestion?.id === q.id
-                          ? "border-primary bg-primary/10"
-                          : "border-border hover:border-primary/50"
-                      }`}
+                <div className="grid grid-cols-2 gap-2">
+                  <Select value={selectedTopic} onValueChange={setSelectedTopic}>
+                    <SelectTrigger className="text-xs">
+                      <SelectValue placeholder="Filter by topic" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {uniqueTopics.map((topic) => (
+                        <SelectItem key={topic} value={topic}>
+                          {topic.substring(0, 20)}...
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                  {selectedTopic && (
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      className="h-10 px-2"
+                      onClick={() => setSelectedTopic("")}
                     >
-                      <div className="text-sm font-medium truncate">{q.questionId}</div>
-                      <div className="text-xs text-muted-foreground truncate">{q.topic}</div>
-                      <div className="text-xs text-muted-foreground">{q.difficulty}</div>
-                    </button>
-                  ))}
+                      Clear
+                    </Button>
+                  )}
+
+                  <Select value={selectedDifficulty} onValueChange={setSelectedDifficulty}>
+                    <SelectTrigger className="text-xs">
+                      <SelectValue placeholder="Filter by difficulty" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {difficulties.map((diff) => (
+                        <SelectItem key={diff} value={diff}>
+                          {diff.charAt(0).toUpperCase() + diff.slice(1)}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                  {selectedDifficulty && (
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      className="h-10 px-2"
+                      onClick={() => setSelectedDifficulty("")}
+                    >
+                      Clear
+                    </Button>
+                  )}
+                </div>
+
+                <div className="text-xs text-muted-foreground">
+                  Showing {filteredQuestions.length} of {questions.length} questions
+                </div>
+
+                <div className="space-y-2 max-h-96 overflow-y-auto">
+                  {filteredQuestions.map((q) => {
+                    const difficultyColors = {
+                      easy: "bg-green-100 text-green-800",
+                      medium: "bg-yellow-100 text-yellow-800",
+                      hard: "bg-red-100 text-red-800",
+                    };
+                    const diffColor = difficultyColors[q.difficulty] || "bg-gray-100 text-gray-800";
+                    const preview = q.text.substring(0, 80) + (q.text.length > 80 ? "..." : "");
+                    
+                    return (
+                      <button
+                        key={q.id}
+                        onClick={() => setSelectedQuestion(q)}
+                        className={`w-full text-left p-3 rounded-lg border-2 transition-colors ${
+                          selectedQuestion?.id === q.id
+                            ? "border-primary bg-primary/10"
+                            : "border-border hover:border-primary/50"
+                        }`}
+                      >
+                        <div className="flex items-start justify-between gap-2 mb-1">
+                          <div className="text-xs font-mono text-muted-foreground">{q.questionId}</div>
+                          <span className={`text-xs px-2 py-1 rounded whitespace-nowrap ${diffColor}`}>
+                            {q.difficulty}
+                          </span>
+                        </div>
+                        <div className="text-sm font-medium line-clamp-2 mb-1">{preview}</div>
+                        <div className="text-xs text-muted-foreground truncate">{q.topic}</div>
+                      </button>
+                    );
+                  })}
                 </div>
               </CardContent>
             </Card>

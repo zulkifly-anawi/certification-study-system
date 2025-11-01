@@ -79,3 +79,13 @@
 - [x] Implement topic filtering in practice session
 - [x] Display selected topic in practice session header
 - [x] Test topic filtering with various topics
+
+## Admin Panel UI Improvements
+- [x] Add question text preview in question list (first 100 chars)
+- [x] Add difficulty level badge to question list
+- [x] Add topic display with better formatting
+- [x] Implement expandable question preview in list
+- [x] Add search by question text functionality
+- [x] Add filter by difficulty level
+- [x] Add filter by topic in question list
+- [x] Improve question list layout with better visual hierarchy
