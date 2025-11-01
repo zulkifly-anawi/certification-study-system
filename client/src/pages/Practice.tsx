@@ -9,11 +9,13 @@ import { Input } from "@/components/ui/input";
 import { trpc } from "@/lib/trpc";
 import { ArrowLeft, CheckCircle2, XCircle, Loader2 } from "lucide-react";
 import { useLocation } from "wouter";
+import { useCertification } from "@/contexts/CertificationContext";
 import { useState, useEffect, useMemo } from "react";
 import { toast } from "sonner";
 
 export default function Practice() {
   const { isAuthenticated } = useAuth();
+  const { selectedCertification } = useCertification();
   const [, setLocation] = useLocation();
   const [mode, setMode] = useState<"practice" | "quiz" | "exam" | "topic">("practice");
   const [questionCount, setQuestionCount] = useState(10);
@@ -29,7 +31,7 @@ export default function Practice() {
   const [startTime, setStartTime] = useState<number>(0);
   const [questions, setQuestions] = useState<any[]>([]);
 
-  const topics = trpc.questions.getTopics.useQuery(undefined, { enabled: isAuthenticated });
+  const topics = trpc.questions.getTopics.useQuery({ certification: selectedCertification }, { enabled: isAuthenticated });
   const startSession = trpc.sessions.start.useMutation();
   const submitAnswer = trpc.sessions.submitAnswer.useMutation();
   const completeSession = trpc.sessions.complete.useMutation();
@@ -56,9 +58,9 @@ export default function Practice() {
       // Fetch questions
       let fetchedQuestions;
       if (mode === "topic" && selectedTopic) {
-        fetchedQuestions = await utils.questions.getByTopic.fetch({ topic: selectedTopic, count });
+        fetchedQuestions = await utils.questions.getByTopic.fetch({ topic: selectedTopic, count, certification: selectedCertification });
       } else {
-        fetchedQuestions = await utils.questions.getRandom.fetch({ count });
+        fetchedQuestions = await utils.questions.getRandom.fetch({ count, certification: selectedCertification });
       }
 
       if (fetchedQuestions.length === 0) {
@@ -71,6 +73,7 @@ export default function Practice() {
         sessionType: mode,
         topic: mode === "topic" ? selectedTopic : undefined,
         totalQuestions: fetchedQuestions.length,
+        certification: selectedCertification,
       });
 
       setQuestions(fetchedQuestions);

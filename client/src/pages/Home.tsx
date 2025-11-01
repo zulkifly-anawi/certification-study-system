@@ -19,7 +19,7 @@ export default function Home() {
   });
   
   // Fetch question count and topics
-  const { data: stats } = trpc.progress.getStats.useQuery(undefined, {
+  const { data: stats } = trpc.progress.getStats.useQuery({ certification: selectedCertification }, {
     enabled: isAuthenticated,
   });
 

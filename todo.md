@@ -151,3 +151,12 @@
 - All tRPC procedures updated to accept certification parameter
 - Frontend pages (Progress, History, AdminEdit) now use CertificationContext
 - Backward compatibility maintained - defaults to CAPM certification
+
+
+## Bug Fixes - Input Validation
+- [x] Fix Home page progress.getStats call to pass certification parameter
+- [x] Fix Practice page getTopics call to pass certification parameter
+- [x] Fix Practice page getRandom call to pass certification parameter
+- [x] Fix Practice page getByTopic call to pass certification parameter
+- [x] Fix Practice page sessions.start call to pass certification parameter
+- [x] Verify all tRPC procedures have proper input validation
