@@ -125,8 +125,10 @@ export default function Home() {
               <BookOpen className="w-6 h-6 text-primary-foreground" />
             </div>
             <div>
-              <h1 className="text-xl font-bold text-foreground">{APP_TITLE}</h1>
-              <p className="text-sm text-muted-foreground">CAPM Certification Prep</p>
+              <h1 className="text-xl font-bold text-foreground">Cert Study System</h1>
+              <p className="text-sm text-muted-foreground">
+                {certifications?.find(c => c.code === selectedCertification)?.name || 'Certification'} Prep
+              </p>
             </div>
           </div>
           <div className="flex items-center gap-4">
@@ -171,7 +173,7 @@ export default function Home() {
               Choose Your Study Mode
             </h2>
             <p className="text-muted-foreground">
-              Select a practice mode below to begin your CAPM certification journey
+              Select a practice mode below to begin your {certifications?.find(c => c.code === selectedCertification)?.name || 'certification'} journey
             </p>
           </div>
 
