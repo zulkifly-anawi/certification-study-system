@@ -298,6 +298,16 @@ export default function Practice() {
             <CardTitle className="text-xl mt-4">{currentQuestion.text}</CardTitle>
           </CardHeader>
           <CardContent className="space-y-6">
+            {/* Display diagram/image if available */}
+            {currentQuestion.mediaUrl && (
+              <div className="mb-6">
+                <img
+                  src={currentQuestion.mediaUrl}
+                  alt="Question diagram"
+                  className="max-w-full h-auto rounded-lg border border-border shadow-sm"
+                />
+              </div>
+            )}
             <RadioGroup value={selectedAnswer} onValueChange={setSelectedAnswer} disabled={showFeedback}>
               {Object.entries(currentQuestion.options).map(([key, value]) => (
                 <div

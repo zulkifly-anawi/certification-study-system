@@ -354,3 +354,15 @@ export async function getAllQuestions() {
 
   return result;
 }
+
+export async function updateQuestion(id: number, updates: Partial<InsertQuestion>) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+
+  const result = await db
+    .update(questions)
+    .set(updates)
+    .where(eq(questions.id, id));
+
+  return result;
+}

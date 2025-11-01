@@ -60,3 +60,9 @@
 - [ ] Fix database insert error with onDuplicateKeyUpdate for questions with large options JSON
 - [x] Disable auto-seeding of Q006-Q030 questions on server restart
 - [ ] Fix validation mismatch between preview and published versions for comma-separated answers
+- [x] Add mediaUrl field to database schema for storing diagram/image URLs
+- [x] Update import validation to accept optional mediaUrl field
+- [x] Display diagrams above questions in practice mode
+- [x] Build admin edit panel with question list and edit form
+- [x] Implement image upload to S3 with public URL generation
+- [x] Test media display on all question types (multiple choice, matching, multiple answers)

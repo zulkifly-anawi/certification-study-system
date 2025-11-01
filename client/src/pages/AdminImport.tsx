@@ -141,33 +141,63 @@ export default function AdminImport() {
           Back to Home
         </Button>
 
-        {/* Export Card */}
-        <Card className="mb-6 bg-gradient-to-r from-green-50 to-emerald-50 border-green-200">
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <Download className="w-5 h-5 text-green-600" />
-              Export Questions
-            </CardTitle>
-            <CardDescription>
-              Download all questions from the database as JSON
-            </CardDescription>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <div className="bg-white rounded-lg p-4 border border-green-100">
-              <p className="text-sm text-gray-600 mb-4">
-                Total questions in database: <span className="font-bold text-green-600">{exportQuery.data?.totalCount || 0}</span>
-              </p>
-              <Button
-                onClick={handleExport}
-                disabled={isExporting || (exportQuery.data?.totalCount || 0) === 0}
-                className="w-full bg-green-600 hover:bg-green-700"
-                size="lg"
-              >
-                {isExporting ? "Exporting..." : "Download All Questions"}
-              </Button>
-            </div>
-          </CardContent>
-        </Card>
+        {/* Admin Actions */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+          {/* Export Card */}
+          <Card className="bg-gradient-to-r from-green-50 to-emerald-50 border-green-200">
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <Download className="w-5 h-5 text-green-600" />
+                Export Questions
+              </CardTitle>
+              <CardDescription>
+                Download all questions as JSON
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div className="bg-white rounded-lg p-4 border border-green-100">
+                <p className="text-sm text-gray-600 mb-4">
+                  Total: <span className="font-bold text-green-600">{exportQuery.data?.totalCount || 0}</span>
+                </p>
+                <Button
+                  onClick={handleExport}
+                  disabled={isExporting || (exportQuery.data?.totalCount || 0) === 0}
+                  className="w-full bg-green-600 hover:bg-green-700"
+                  size="lg"
+                >
+                  {isExporting ? "Exporting..." : "Export"}
+                </Button>
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* Edit Card */}
+          <Card className="bg-gradient-to-r from-blue-50 to-cyan-50 border-blue-200">
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <Upload className="w-5 h-5 text-blue-600" />
+                Edit Questions
+              </CardTitle>
+              <CardDescription>
+                Add images and edit details
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div className="bg-white rounded-lg p-4 border border-blue-100">
+                <p className="text-sm text-gray-600 mb-4">
+                  Manage {exportQuery.data?.totalCount || 0} questions
+                </p>
+                <Button
+                  onClick={() => setLocation("/admin/edit")}
+                  className="w-full bg-blue-600 hover:bg-blue-700"
+                  size="lg"
+                >
+                  Edit Questions
+                </Button>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
 
         {/* Import Card */}
         <Card className="mb-6">

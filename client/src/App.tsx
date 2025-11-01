@@ -9,6 +9,7 @@ import Practice from "./pages/Practice";
 import Progress from "./pages/Progress";
 import History from "./pages/History";
 import AdminImport from "./pages/AdminImport";
+import AdminEdit from "./pages/AdminEdit";
 
 function Router() {
   return (
@@ -18,6 +19,7 @@ function Router() {
       <Route path={"/progress"} component={Progress} />
       <Route path={"/history"} component={History} />
       <Route path={"/admin/import"} component={AdminImport} />
+      <Route path={"/admin/edit"} component={AdminEdit} />
       <Route path={"/404"} component={NotFound} />
       <Route component={NotFound} />
     </Switch>

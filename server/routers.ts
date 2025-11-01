@@ -276,5 +276,47 @@ export const appRouter = router({
           throw new Error(`Failed to export questions: ${errorMsg}`);
         }
       }),
+
+    getAllQuestionsForEdit: adminProcedure
+      .query(async () => {
+        try {
+          const allQuestions = await db.getAllQuestions();
+          return {
+            success: true,
+            questions: allQuestions,
+            totalCount: allQuestions.length,
+          };
+        } catch (error) {
+          const errorMsg = error instanceof Error ? error.message : String(error);
+          console.error(`[Admin] Get all questions failed: ${errorMsg}`);
+          throw new Error(`Failed to get questions: ${errorMsg}`);
+        }
+      }),
+
+    updateQuestion: adminProcedure
+      .input(z.object({
+        id: z.number(),
+        text: z.string().optional(),
+        options: z.record(z.string(), z.string()).optional(),
+        correctAnswer: z.string().optional(),
+        explanation: z.string().optional(),
+        topic: z.string().optional(),
+        difficulty: z.enum(['easy', 'medium', 'hard']).optional(),
+        mediaUrl: z.string().optional(),
+      }))
+      .mutation(async ({ input }) => {
+        try {
+          const { id, ...updates } = input;
+          await db.updateQuestion(id, updates);
+          return {
+            success: true,
+            message: "Question updated successfully",
+          };
+        } catch (error) {
+          const errorMsg = error instanceof Error ? error.message : String(error);
+          console.error(`[Admin] Update question failed: ${errorMsg}`);
+          throw new Error(`Failed to update question: ${errorMsg}`);
+        }
+      }),
   }),
 });

@@ -30,6 +30,7 @@ export const questions = mysqlTable("questions", {
   explanation: text("explanation").notNull(),
   topic: varchar("topic", { length: 100 }).notNull(),
   difficulty: mysqlEnum("difficulty", ["easy", "medium", "hard"]).notNull(),
+  mediaUrl: text("mediaUrl"), // Optional URL to diagram/image for this question
   createdAt: timestamp("createdAt").defaultNow().notNull(),
 });
 
