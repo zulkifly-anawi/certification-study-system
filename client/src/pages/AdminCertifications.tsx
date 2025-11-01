@@ -103,7 +103,7 @@ export default function AdminCertifications() {
             <Button
               variant="outline"
               size="sm"
-              onClick={() => navigate("/admin")}
+              onClick={() => navigate("/admin/import")}
               className="gap-2"
             >
               <ArrowLeft className="w-4 h-4" />
