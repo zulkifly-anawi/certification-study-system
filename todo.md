@@ -204,3 +204,9 @@
 - [x] Test adding question with multiple options (A-D)
 - [x] Verify question appears in edit panel with correct data
 - [x] Test certification filtering for new questions
+
+## Bug Fixes - mediaUrl Validation
+- [x] Fix mediaUrl validation error in updateQuestion procedure
+- [x] Allow null/optional mediaUrl values in schema
+- [x] Filter out undefined values before database update
+- [x] Test updating question without mediaUrl

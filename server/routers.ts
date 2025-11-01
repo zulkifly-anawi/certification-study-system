@@ -370,12 +370,16 @@ export const appRouter = router({
         explanation: z.string().optional(),
         topic: z.string().optional(),
         difficulty: z.enum(['easy', 'medium', 'hard']).optional(),
-        mediaUrl: z.string().optional(),
+        mediaUrl: z.string().nullable().optional(),
       }))
       .mutation(async ({ input }) => {
         try {
           const { id, ...updates } = input;
-          await db.updateQuestion(id, updates);
+          // Filter out null values to avoid updating with null
+          const filteredUpdates = Object.fromEntries(
+            Object.entries(updates).filter(([_, v]) => v !== undefined)
+          );
+          await db.updateQuestion(id, filteredUpdates);
           return {
             success: true,
             message: "Question updated successfully",
