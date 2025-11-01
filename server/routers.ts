@@ -5,6 +5,8 @@ import { publicProcedure, protectedProcedure, adminProcedure, router } from "./_
 import { z } from "zod";
 import * as db from "./db";
 import questionBankData from "./question_bank.json";
+import { eq } from "drizzle-orm";
+import { certifications } from "../drizzle/schema";
 
 // Auto-seeding disabled - questions are now managed through Admin Import Panel
 // Uncomment below to re-enable if needed
@@ -363,6 +365,17 @@ export const appRouter = router({
           console.error(`[Admin] Update question failed: ${errorMsg}`);
           throw new Error(`Failed to update question: ${errorMsg}`);
         }
+      }),
+  }),
+
+  certifications: router({
+    getAll: protectedProcedure
+      .query(async () => {
+        const database = await db.getDb();
+        if (!database) return [];
+        const { certifications } = await import('../drizzle/schema');
+        const { eq } = await import('drizzle-orm');
+        return await database.select().from(certifications).where(eq(certifications.isActive, true));
       }),
   }),
 });

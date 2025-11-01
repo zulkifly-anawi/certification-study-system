@@ -105,3 +105,17 @@
 - [x] Update tRPC sessions.start procedure to accept certification
 - [x] Update tRPC sessions.submit procedure to handle certification
 - [x] Test backend changes with CAPM certification
+
+
+## Phase 2: Frontend Certification Selector
+- [ ] Create context/state for selected certification
+- [ ] Add certification selector dropdown to home page
+- [ ] Fetch available certifications from backend
+- [ ] Display certification selector with CAPM as default
+- [ ] Update Practice page to use selected certification
+- [ ] Update Quiz page to use selected certification
+- [ ] Update Exam page to use selected certification
+- [ ] Update Topic Study to use selected certification
+- [ ] Update Progress Dashboard to filter by certification
+- [ ] Update Session History to filter by certification
+- [ ] Test certification selector with all practice modes

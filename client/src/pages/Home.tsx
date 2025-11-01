@@ -5,10 +5,18 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { BookOpen, Brain, Target, TrendingUp, History, Award, Settings } from "lucide-react";
 import { APP_LOGO, APP_TITLE, getLoginUrl } from "@/const";
 import { useLocation } from "wouter";
+import { useCertification } from "@/contexts/CertificationContext";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 export default function Home() {
   const { user, loading, isAuthenticated } = useAuth();
   const [, setLocation] = useLocation();
+  const { selectedCertification, setSelectedCertification } = useCertification();
+  
+  // Fetch available certifications
+  const { data: certifications } = trpc.certifications.getAll.useQuery(undefined, {
+    enabled: isAuthenticated,
+  });
   
   // Fetch question count and topics
   const { data: stats } = trpc.progress.getStats.useQuery(undefined, {
@@ -122,6 +130,23 @@ export default function Home() {
             </div>
           </div>
           <div className="flex items-center gap-4">
+            {certifications && certifications.length > 0 && (
+              <div className="flex items-center gap-2">
+                <label className="text-sm font-medium">Certification:</label>
+                <Select value={selectedCertification} onValueChange={setSelectedCertification}>
+                  <SelectTrigger className="w-40">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {certifications.map((cert) => (
+                      <SelectItem key={cert.code} value={cert.code}>
+                        {cert.name}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+            )}
             <span className="text-sm text-muted-foreground">Welcome, {user?.name}</span>
             {user?.role === 'admin' && (
               <Button
