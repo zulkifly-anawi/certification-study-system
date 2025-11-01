@@ -9,7 +9,8 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { trpc } from "@/lib/trpc";
 import { useLocation } from "wouter";
 import { toast } from "sonner";
-import { ArrowLeft, AlertCircle, Save, Upload, X, Loader2 } from "lucide-react";
+import { ArrowLeft, AlertCircle, Save, Upload, X, Loader2, Trash2 } from "lucide-react";
+import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog";
 import { useState, useEffect } from "react";
 
 export default function AdminEdit() {
@@ -27,6 +28,7 @@ export default function AdminEdit() {
     enabled: isAuthenticated && user?.role === 'admin' 
   });
   const updateQuestion = trpc.admin.updateQuestion.useMutation();
+  const deleteQuestion = trpc.admin.deleteQuestion.useMutation();
   const uploadImage = trpc.admin.uploadQuestionImage.useMutation();
 
   useEffect(() => {
@@ -93,6 +95,24 @@ export default function AdminEdit() {
       console.error(error);
     } finally {
       setIsSaving(false);
+    }
+  };
+
+  const handleDeleteQuestion = async () => {
+    if (!selectedQuestion) return;
+
+    try {
+      await deleteQuestion.mutateAsync({
+        id: selectedQuestion.id,
+        certification: selectedCertification,
+      });
+
+      setQuestions(questions.filter(q => q.id !== selectedQuestion.id));
+      setSelectedQuestion(null);
+      toast.success("Question deleted successfully");
+    } catch (error) {
+      toast.error("Failed to delete question");
+      console.error(error);
     }
   };
 
@@ -422,24 +442,63 @@ export default function AdminEdit() {
                     </Select>
                   </div>
 
-                  {/* Save Button */}
-                  <Button
-                    onClick={handleSaveQuestion}
-                    disabled={isSaving}
-                    className="w-full"
-                  >
-                    {isSaving ? (
-                      <>
-                        <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-                        Saving...
-                      </>
-                    ) : (
-                      <>
-                        <Save className="w-4 h-4 mr-2" />
-                        Save Question
-                      </>
-                    )}
-                  </Button>
+                  {/* Save and Delete Buttons */}
+                  <div className="flex gap-2">
+                    <Button
+                      onClick={handleSaveQuestion}
+                      disabled={isSaving}
+                      className="flex-1"
+                    >
+                      {isSaving ? (
+                        <>
+                          <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                          Saving...
+                        </>
+                      ) : (
+                        <>
+                          <Save className="w-4 h-4 mr-2" />
+                          Save Question
+                        </>
+                      )}
+                    </Button>
+                    <AlertDialog>
+                      <AlertDialogTrigger asChild>
+                        <Button
+                          variant="destructive"
+                          size="sm"
+                          className="gap-2"
+                        >
+                          <Trash2 className="w-4 h-4" />
+                          Delete
+                        </Button>
+                      </AlertDialogTrigger>
+                      <AlertDialogContent>
+                        <AlertDialogHeader>
+                          <AlertDialogTitle>Delete Question?</AlertDialogTitle>
+                          <AlertDialogDescription>
+                            <div className="space-y-3 mt-4">
+                              <p className="font-semibold text-foreground">Question:</p>
+                              <p className="text-sm bg-muted p-3 rounded max-h-32 overflow-y-auto">
+                                {selectedQuestion.text}
+                              </p>
+                              <p className="text-sm text-destructive font-medium">
+                                This action cannot be undone. The question will be permanently deleted.
+                              </p>
+                            </div>
+                          </AlertDialogDescription>
+                        </AlertDialogHeader>
+                        <div className="flex gap-2 justify-end">
+                          <AlertDialogCancel>Cancel</AlertDialogCancel>
+                          <AlertDialogAction
+                            onClick={handleDeleteQuestion}
+                            className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+                          >
+                            Delete
+                          </AlertDialogAction>
+                        </div>
+                      </AlertDialogContent>
+                    </AlertDialog>
+                  </div>
                 </CardContent>
               </Card>
             ) : (

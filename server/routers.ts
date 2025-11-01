@@ -387,6 +387,40 @@ export const appRouter = router({
         }
       }),
 
+    deleteQuestion: adminProcedure
+      .input(z.object({
+        id: z.number(),
+        certification: z.string().default('CAPM')
+      }))
+      .mutation(async ({ input }) => {
+        try {
+          const database = await db.getDb();
+          if (!database) throw new Error("Database not available");
+          
+          // Verify question exists and belongs to the selected certification
+          const question = await database.select().from(questions).where(eq(questions.id, input.id)).limit(1);
+          if (question.length === 0) {
+            throw new Error("Question not found");
+          }
+          
+          if (question[0].certification !== input.certification) {
+            throw new Error("Cannot delete question from a different certification");
+          }
+          
+          // Delete the question
+          await database.delete(questions).where(eq(questions.id, input.id));
+          
+          return {
+            success: true,
+            message: "Question deleted successfully",
+          };
+        } catch (error) {
+          const errorMsg = error instanceof Error ? error.message : String(error);
+          console.error(`[Admin] Delete question failed: ${errorMsg}`);
+          throw new Error(`Failed to delete question: ${errorMsg}`);
+        }
+      }),
+
     addCertification: adminProcedure
       .input(z.object({
         code: z.string().min(1, "Code is required"),
