@@ -140,30 +140,32 @@ export default function AdminImport() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 p-4">
       <div className="max-w-4xl mx-auto">
-        <div className="flex items-center justify-between mb-6">
-          <div className="flex gap-2">
+        <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3 md:gap-4 mb-6">
+          <div className="flex flex-col sm:flex-row gap-2">
             <Button
               variant="ghost"
               onClick={() => setLocation("/")}
-              className="flex items-center gap-2"
+              className="flex items-center gap-2 text-xs md:text-sm px-2 md:px-3 py-1 md:py-2 h-9"
             >
-              <ArrowLeft className="w-4 h-4" />
-              Back to Home
+              <ArrowLeft className="w-3 h-3 md:w-4 md:h-4 flex-shrink-0" />
+              <span className="hidden sm:inline">Back to Home</span>
+              <span className="sm:hidden">Back</span>
             </Button>
             <Button
               variant="outline"
               onClick={() => setLocation("/admin/certifications")}
-              className="flex items-center gap-2"
+              className="flex items-center gap-2 text-xs md:text-sm px-2 md:px-3 py-1 md:py-2 h-9"
             >
-              Manage Certifications
+              <span className="hidden sm:inline">Manage Certifications</span>
+              <span className="sm:hidden">Certifications</span>
             </Button>
           </div>
           
           {certifications && certifications.length > 0 && (
-            <div className="flex items-center gap-2">
-              <label className="text-sm font-medium">Import for:</label>
+            <div className="flex items-center gap-2 min-w-0">
+              <label className="text-xs md:text-sm font-medium whitespace-nowrap">Import for:</label>
               <Select value={selectedCertification} onValueChange={setSelectedCertification}>
-                <SelectTrigger className="w-48">
+                <SelectTrigger className="w-32 md:w-48 text-xs md:text-sm h-9">
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>

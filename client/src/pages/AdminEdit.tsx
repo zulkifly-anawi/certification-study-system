@@ -141,7 +141,7 @@ export default function AdminEdit() {
       <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100 p-4">
         <Card className="max-w-md">
           <CardHeader>
-            <CardTitle className="flex items-center gap-2">
+            <CardTitle className="flex items-center gap-2 text-xs md:text-sm px-2 md:px-3 py-1 md:py-2 h-9">
               <AlertCircle className="w-5 h-5 text-red-500" />
               Access Denied
             </CardTitle>
@@ -359,7 +359,7 @@ export default function AdminEdit() {
                           </Button>
                         </div>
                       )}
-                      <div className="flex items-center gap-2">
+                      <div className="flex items-center gap-2 text-xs md:text-sm px-2 md:px-3 py-1 md:py-2 h-9">
                         <Input
                           type="file"
                           accept="image/*"
