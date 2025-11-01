@@ -206,6 +206,34 @@ export default function AdminEdit() {
                     />
                   </div>
 
+                  {/* Answer Options */}
+                  <div>
+                    <Label>Answer Options</Label>
+                    <div className="mt-2 space-y-3">
+                      {selectedQuestion.options && Object.entries(selectedQuestion.options).map(([key, value]) => (
+                        <div key={key} className="flex gap-2 items-start">
+                          <div className="w-12 pt-2 font-semibold text-center bg-muted rounded px-2 py-1">
+                            {key}
+                          </div>
+                          <Input
+                            value={value}
+                            onChange={(e) =>
+                              setSelectedQuestion({
+                                ...selectedQuestion,
+                                options: {
+                                  ...selectedQuestion.options,
+                                  [key]: e.target.value,
+                                },
+                              })
+                            }
+                            placeholder={`Option ${key}`}
+                            className="flex-1"
+                          />
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
                   {/* Media Upload */}
                   <div>
                     <Label>Diagram/Image (Optional)</Label>
