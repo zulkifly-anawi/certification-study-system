@@ -169,3 +169,11 @@
 - [x] Test switching between certifications
 - [x] Verify stats update when certification changes
 - [x] Verify data isolation per certification
+
+
+## Admin Import Certification Selector
+- [x] Add certification selector to admin import page header
+- [x] Display selected certification in import page
+- [x] Pass selected certification to import mutation
+- [x] Test importing questions for different certifications
+- [x] Verify questions are tagged with correct certification

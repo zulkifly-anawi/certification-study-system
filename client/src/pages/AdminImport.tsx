@@ -8,16 +8,22 @@ import { trpc } from "@/lib/trpc";
 import { useLocation } from "wouter";
 import { toast } from "sonner";
 import { Upload, Download, ArrowLeft, AlertCircle, CheckCircle } from "lucide-react";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 export default function AdminImport() {
   const { user, isAuthenticated } = useAuth();
-  const { selectedCertification } = useCertification();
+  const { selectedCertification, setSelectedCertification } = useCertification();
   const [, setLocation] = useLocation();
   const [jsonInput, setJsonInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [isExporting, setIsExporting] = useState(false);
   const importMutation = trpc.admin.importQuestions.useMutation();
   const exportQuery = trpc.admin.exportQuestions.useQuery({ certification: selectedCertification });
+  
+  // Fetch available certifications
+  const { data: certifications } = trpc.certifications.getAll.useQuery(undefined, {
+    enabled: isAuthenticated,
+  });
 
   // Check if user is admin
   if (!isAuthenticated || user?.role !== "admin") {
@@ -134,14 +140,34 @@ export default function AdminImport() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 p-4">
       <div className="max-w-4xl mx-auto">
-        <Button
-          variant="ghost"
-          onClick={() => setLocation("/")}
-          className="mb-6 flex items-center gap-2"
-        >
-          <ArrowLeft className="w-4 h-4" />
-          Back to Home
-        </Button>
+        <div className="flex items-center justify-between mb-6">
+          <Button
+            variant="ghost"
+            onClick={() => setLocation("/")}
+            className="flex items-center gap-2"
+          >
+            <ArrowLeft className="w-4 h-4" />
+            Back to Home
+          </Button>
+          
+          {certifications && certifications.length > 0 && (
+            <div className="flex items-center gap-2">
+              <label className="text-sm font-medium">Import for:</label>
+              <Select value={selectedCertification} onValueChange={setSelectedCertification}>
+                <SelectTrigger className="w-48">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  {certifications.map((cert) => (
+                    <SelectItem key={cert.code} value={cert.code}>
+                      {cert.name}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+          )}
+        </div>
 
         {/* Admin Actions */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
