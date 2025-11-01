@@ -160,3 +160,12 @@
 - [x] Fix Practice page getByTopic call to pass certification parameter
 - [x] Fix Practice page sessions.start call to pass certification parameter
 - [x] Verify all tRPC procedures have proper input validation
+
+
+## Certification Selector UI
+- [x] Add certification selector dropdown to home page header
+- [x] Seed certifications table with CAPM, PSM1, PMP
+- [x] Display all available certifications in dropdown
+- [x] Test switching between certifications
+- [x] Verify stats update when certification changes
+- [x] Verify data isolation per certification
