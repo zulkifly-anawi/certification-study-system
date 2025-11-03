@@ -417,7 +417,7 @@ export default function Practice() {
                   className="flex-1"
                   size="lg"
                   onClick={handleSubmitAnswer}
-                  disabled={!selectedAnswer || submitAnswer.isPending}
+                  disabled={currentQuestion.correctAnswer.includes(',') ? selectedAnswers.size === 0 : !selectedAnswer || submitAnswer.isPending}
                 >
                   {submitAnswer.isPending ? (
                     <>

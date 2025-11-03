@@ -1,0 +1,18 @@
+{
+  "query": "SELECT id, questionId, text, correctAnswer, options, difficulty FROM questions WHERE questionId = 'Q1762097153119_0n9uxbk4u_103' LIMIT 1;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 3UM4huzBRqdDojB.1697ca2f01d2 --database c8q5ZjHgoGHDk3Mrv468Kv --execute SELECT id, questionId, text, correctAnswer, options, difficulty FROM questions WHERE questionId = 'Q1762097153119_0n9uxbk4u_103' LIMIT 1;",
+  "rows": [
+    {
+      "id": "1230104",
+      "questionId": "Q1762097153119_0n9uxbk4u_103",
+      "text": "[Practice Test 3] 110) An adaptive project team is meeting for the first time and deciding on the project management approach. After defining the project artifacts, one team member argues that the events are missing. The scrum master coaches the team to complete the planning. Which two of the following elements should be included? (Choose two)",
+      "correctAnswer": "C,D",
+      "options": "{\"A\": \"Increments\", \"B\": \"Sprint backlog\", \"C\": \"Daily scrum\", \"D\": \"Sprint retrospective\", \"E\": \"Product backlog\"}",
+      "difficulty": "medium"
+    }
+  ],
+  "messages": [],
+  "stdout": "id\tquestionId\ttext\tcorrectAnswer\toptions\tdifficulty\n1230104\tQ1762097153119_0n9uxbk4u_103\t[Practice Test 3] 110) An adaptive project team is meeting for the first time and deciding on the project management approach. After defining the project artifacts, one team member argues that the events are missing. The scrum master coaches the team to complete the planning. Which two of the following elements should be included? (Choose two)\tC,D\t{\"A\": \"Increments\", \"B\": \"Sprint backlog\", \"C\": \"Daily scrum\", \"D\": \"Sprint retrospective\", \"E\": \"Product backlog\"}\tmedium\n",
+  "stderr": "",
+  "execution_time_ms": 1554
+}
