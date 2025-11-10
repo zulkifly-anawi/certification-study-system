@@ -2,7 +2,7 @@
 
 A comprehensive web-based study platform for Project Management certification exam preparation. Built with React 19, Express 4, tRPC 11, and Drizzle ORM.
 
-**Live Demo:** [CAPM Study System](https://capm-study-system.manus.space)
+**Live Demo:** [CAPM Study System](https://capmstudy-c8q5zjhg.manus.space)
 
 ---
 
@@ -703,4 +703,4 @@ For issues, questions, or suggestions:
 
 **Last Updated:** November 2, 2025
 
-For the latest updates and features, visit the [GitHub repository](https://github.com/yourusername/capm-study-web).
+For the latest updates and features, visit the [GitHub repository](https://github.com/zulkifly-anawi/certification-study-system).
