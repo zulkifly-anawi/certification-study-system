@@ -1,6 +1,6 @@
 <div align="center">
 
-# 🎓 CAPM Study System
+# 🎓 Certification Study System
 
 ### A Modern, Full-Stack Certification Study Platform
 
@@ -19,7 +19,7 @@ Built with React 19, Express 4, tRPC 11, and Drizzle ORM
 
 ## 📖 Overview
 
-**CAPM Study System** is a comprehensive web-based platform designed to help professionals prepare for certification exams through interactive practice questions, timed quizzes, and full exam simulations. The system currently supports CAPM, PSM1, PMP, and other professional certifications with a robust admin panel for managing questions and tracking user progress.
+**Certification Study System** is a comprehensive web-based platform designed to help professionals prepare for certification exams through interactive practice questions, timed quizzes, and full exam simulations. The system currently supports CAPM, PSM1, PMP, and other professional certifications with a robust admin panel for managing questions and tracking user progress.
 
 ### 🎯 What Makes It Special?
 
@@ -71,26 +71,26 @@ Built with React 19, Express 4, tRPC 11, and Drizzle ORM
 The system follows a modern full-stack architecture with clear separation of concerns:
 
 ```
-┌─────────────────────────────────────────────────────────────┐
-│                      Client (React 19)                      │
-│  ┌──────────────┐  ┌──────────────┐  ┌──────────────┐     │
-│  │   Practice   │  │   Progress   │  │    Admin     │     │
-│  │     Pages    │  │   Dashboard  │  │    Panel     │     │
-│  └──────────────┘  └──────────────┘  └──────────────┘     │
-│           │                │                  │             │
-│           └────────────────┴──────────────────┘             │
-│                           │                                 │
-│                    tRPC Client (Type-Safe)                  │
-└───────────────────────────┼─────────────────────────────────┘
+┌────────────────────────────────────────────────────────────┐
+│                      Client (React 19)                     │
+│  ┌──────────────┐  ┌──────────────┐  ┌──────────────┐      │
+│  │   Practice   │  │   Progress   │  │    Admin     │      │
+│  │     Pages    │  │   Dashboard  │  │    Panel     │      │
+│  └──────────────┘  └──────────────┘  └──────────────┘      │
+│           │               │                  │             │
+│           └───────────────┴──────────────────┘             │
+│                           │                                │
+│                    tRPC Client (Type-Safe)                 │
+└───────────────────────────┼────────────────────────────────┘
                             │
                    ┌────────▼────────┐
                    │   tRPC Server   │
                    │   (Express 4)   │
                    └────────┬────────┘
                             │
-        ┌───────────────────┼───────────────────┐
-        │                   │                   │
-   ┌────▼─────┐      ┌─────▼──────┐     ┌─────▼────┐
+        ┌───────────────────┼─────────────────┐
+        │                   │                 │
+   ┌────▼─────┐      ┌──────▼─────┐     ┌─────▼────┐
    │  Auth    │      │  Business  │     │  Storage │
    │  (OAuth) │      │   Logic    │     │  (AWS S3)│
    └──────────┘      └─────┬──────┘     └──────────┘
@@ -99,12 +99,12 @@ The system follows a modern full-stack architecture with clear separation of con
                     │ Drizzle ORM  │
                     └──────┬───────┘
                            │
-              ┌────────────┼────────────┐
-              │            │            │
-        ┌─────▼─────┐ ┌───▼────┐ ┌────▼─────┐
-        │   MySQL   │ │ PostgreSQL │ SQLite  │
-        │  (TiDB)   │ │            │  (Dev)  │
-        └───────────┘ └────────────┘ └────────┘
+              ┌────────────┼─────────────┐
+              │            │             │
+        ┌─────▼─────┐ ┌────▼──────┐ ┌────▼────┐
+        │   MySQL   │ │ PostgreSQL│ | SQLite  │
+        │  (TiDB)   │ │           │ | (Dev)   │
+        └───────────┘ └───────────┘ └─────────┘
 ```
 
 **Data Flow:**
@@ -369,7 +369,7 @@ pnpm install
 cat > .env.local << 'EOF'
 DATABASE_URL=file:./dev.db
 VITE_APP_ID=demo_app
-VITE_APP_TITLE="CAPM Study System"
+VITE_APP_TITLE="Certification Study System"
 JWT_SECRET=your_super_secret_jwt_key_here_change_in_production
 EOF
 
@@ -411,7 +411,7 @@ OAUTH_SERVER_URL=https://api.manus.im
 VITE_OAUTH_PORTAL_URL=https://oauth.manus.im
 
 # App Configuration
-VITE_APP_TITLE="CAPM Study System"
+VITE_APP_TITLE="Certification Study System"
 VITE_APP_LOGO=/logo.svg
 
 # JWT Secret (generate a strong secret for production)
@@ -1085,7 +1085,7 @@ If you find this project helpful, please consider giving it a ⭐ on GitHub!
 
 ---
 
-**Built with ❤️ by the CAPM Study System Team**
+**Built with ❤️ by Zulkifly Anawi**
 
 [Live Demo](https://capmstudy-c8q5zjhg.manus.space) • [GitHub](https://github.com/zulkifly-anawi/certification-study-system) • [Report Issues](https://github.com/zulkifly-anawi/certification-study-system/issues)
 
