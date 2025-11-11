@@ -1081,7 +1081,7 @@ Have an idea? [Open an issue](https://github.com/zulkifly-anawi/certification-st
 
 If you find this project helpful, please consider giving it a ⭐ on GitHub!
 
-[![GitHub stars](https://img.shields.io/github/stars/zulkifly-anawi/certification-study-system?style=social)](https://github.com/zulkifly-anawi/certification-study-system)
+[![GitHub stars](https://img.shields.io/github/stars/zulkifly-anawi/certification-study-system?style=flat-square&color=yellow)](https://github.com/zulkifly-anawi/certification-study-system/stargazers)
 
 ---
 
