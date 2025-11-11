@@ -39,7 +39,7 @@ Built with React 19, Express 4, tRPC 11, and Drizzle ORM
 | **Multi-Certification** | Support for CAPM, PSM1, PMP with complete data isolation |
 | **Real-Time Analytics** | Track accuracy, identify weak topics, review session history |
 | **Question Flexibility** | Single/multiple answers, A-Z options, image/diagram support |
-| **Admin Dashboard** | Add, edit, import (CSV/JSON), preview, and export questions |
+| **Admin Dashboard** | Add, edit, import (JSON), preview, and export questions |
 | **Database Agnostic** | MySQL, PostgreSQL, or SQLite via Drizzle ORM |
 
 ---
@@ -173,7 +173,7 @@ The system follows a modern full-stack architecture with clear separation of con
 - Add questions via intuitive form
 - Edit existing questions with live preview
 - Delete with safety confirmations
-- Bulk import from CSV/JSON files
+- Bulk import from JSON files
 - Export questions for backup
 
 </td>
@@ -623,11 +623,7 @@ export default defineConfig({
 
 ### Bulk Import Format
 
-**CSV Format:**
-```csv
-question_text,option_a,option_b,option_c,option_d,correct_answer,explanation,topic,difficulty
-"What is CAPM?","A definition","B definition","C definition","D definition","A","Explanation text","Fundamentals","easy"
-```
+The admin panel supports importing questions in **JSON format only**.
 
 **JSON Format:**
 ```json
@@ -922,7 +918,7 @@ const { data } = await trpc.progress.getWeakTopics.useQuery({
 - ✅ Mobile-responsive design with dark mode
 - ✅ Question preview feature for admins
 - ✅ Image/diagram support for questions
-- ✅ Bulk import/export (CSV & JSON)
+- ✅ Bulk import/export (JSON format)
 
 </td>
 <td width="50%">
