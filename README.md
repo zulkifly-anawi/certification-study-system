@@ -148,16 +148,28 @@ The system follows a modern full-stack architecture with clear separation of con
 - Multiple certification support (CAPM, PSM1, PMP)
 - Study by specific topics
 - Instant answer feedback with explanations
+<<<<<<< HEAD
 - Detailed performance analytics by topic
+=======
+- Question bookmarking and review
+>>>>>>> 7379296708c62e1de5a3ded32cdfbdb0a16e0f32
 
 </td>
 <td>
 
+<<<<<<< HEAD
 **💱 User Experience**
 - Fully responsive mobile design
 - Intuitive navigation
 - Comprehensive session history tracking
 - Real-time progress updates
+=======
+**📱 User Experience**
+- Fully responsive mobile design
+- Dark/light theme support
+- Intuitive navigation
+- Session persistence
+>>>>>>> 7379296708c62e1de5a3ded32cdfbdb0a16e0f32
 
 </td>
 </tr>
@@ -173,7 +185,11 @@ The system follows a modern full-stack architecture with clear separation of con
 - Add questions via intuitive form
 - Edit existing questions with live preview
 - Delete with safety confirmations
+<<<<<<< HEAD
 - Bulk import from JSON files
+=======
+- Bulk import from CSV/JSON files
+>>>>>>> 7379296708c62e1de5a3ded32cdfbdb0a16e0f32
 - Export questions for backup
 
 </td>
@@ -918,7 +934,11 @@ const { data } = await trpc.progress.getWeakTopics.useQuery({
 - ✅ Mobile-responsive design with dark mode
 - ✅ Question preview feature for admins
 - ✅ Image/diagram support for questions
+<<<<<<< HEAD
 - ✅ Bulk import/export (JSON format)
+=======
+- ✅ Bulk import/export (CSV & JSON)
+>>>>>>> 7379296708c62e1de5a3ded32cdfbdb0a16e0f32
 
 </td>
 <td width="50%">
