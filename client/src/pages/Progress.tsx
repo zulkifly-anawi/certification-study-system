@@ -1,10 +1,11 @@
-import { useAuth } from "@/_core/hooks/useAuth";
 import { useCertification } from "@/contexts/CertificationContext";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { trpc } from "@/lib/trpc";
 import { ArrowLeft, TrendingUp, Target, Award, AlertCircle } from "lucide-react";
 import { useLocation } from "wouter";
+import { ThemeToggle } from "@/components/ThemeToggle";
+import { useAuth } from "@/_core/hooks/useAuth";
 
 export default function Progress() {
   const { isAuthenticated } = useAuth();
@@ -71,14 +72,16 @@ export default function Progress() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 p-4 flex justify-center">
       <div className="max-w-6xl w-full py-8">
-        <Button
-          variant="ghost"
-          className="mb-4"
-          onClick={() => setLocation("/")}
-        >
-          <ArrowLeft className="w-4 h-4 mr-2" />
-          Back to Home
-        </Button>
+        <div className="flex justify-between items-center mb-4">
+          <Button
+            variant="ghost"
+            onClick={() => setLocation("/")}
+          >
+            <ArrowLeft className="w-4 h-4 mr-2" />
+            Back to Home
+          </Button>
+          <ThemeToggle />
+        </div>
 
         <div className="mb-6">
           <h1 className="text-3xl font-bold text-foreground mb-2">Your Progress</h1>

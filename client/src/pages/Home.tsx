@@ -7,6 +7,7 @@ import { APP_LOGO, APP_TITLE, getLoginUrl } from "@/const";
 import { useLocation } from "wouter";
 import { useCertification } from "@/contexts/CertificationContext";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { ThemeToggle } from "@/components/ThemeToggle";
 
 export default function Home() {
   const { user, loading, isAuthenticated } = useAuth();
@@ -158,6 +159,7 @@ export default function Home() {
               {/* User Info and Admin Button */}
               <div className="flex items-center gap-2 md:gap-3">
                 <span className="text-xs md:text-sm text-muted-foreground truncate">Welcome, {user?.name?.split(' ')[0]}</span>
+                <ThemeToggle />
                 {user?.role === 'admin' && (
                   <Button
                     variant="outline"

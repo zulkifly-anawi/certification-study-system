@@ -12,6 +12,7 @@ import { useLocation } from "wouter";
 import { useCertification } from "@/contexts/CertificationContext";
 import { useState, useEffect, useMemo } from "react";
 import { toast } from "sonner";
+import { ThemeToggle } from "@/components/ThemeToggle";
 
 export default function Practice() {
   const { isAuthenticated } = useAuth();
@@ -163,14 +164,16 @@ export default function Practice() {
     return (
       <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 p-4">
         <div className="container max-w-2xl mx-auto py-8">
-          <Button
-            variant="ghost"
-            className="mb-4"
-            onClick={() => setLocation("/")}
-          >
-            <ArrowLeft className="w-4 h-4 mr-2" />
-            Back to Home
-          </Button>
+          <div className="flex justify-between items-center mb-4">
+            <Button
+              variant="ghost"
+              onClick={() => setLocation("/")}
+            >
+              <ArrowLeft className="w-4 h-4 mr-2" />
+              Back to Home
+            </Button>
+            <ThemeToggle />
+          </div>
 
           <Card>
             <CardHeader>

@@ -7,6 +7,7 @@ import { ArrowLeft, Calendar, Clock, Target, Award, CheckCircle2, XCircle } from
 import { useLocation, useRoute } from "wouter";
 import { useState } from "react";
 import { toast } from "sonner";
+import { ThemeToggle } from "@/components/ThemeToggle";
 
 export default function SessionDetail() {
   const { isAuthenticated } = useAuth();
