@@ -27,7 +27,7 @@ Built with React 19, Express 4, tRPC 11, and Drizzle ORM
 - **📊 Advanced Progress Tracking** - Detailed analytics on performance trends and weak areas
 - **🎨 Modern UI/UX** - Built with shadcn/ui components and Tailwind CSS 4
 - **🔧 Admin-Friendly** - Comprehensive admin panel with bulk import, editing, and preview features
-- **🚀 Production-Ready** - Deployed on Manus with 450+ questions and active users
+- **🚀 Production-Ready** - Deployed on Manus with expandable question bank (25 seed questions included)
 - **📱 Mobile-First** - Fully responsive design for study on-the-go
 - **🔐 Secure** - Session ownership validation and role-based access control
 
@@ -148,16 +148,16 @@ The system follows a modern full-stack architecture with clear separation of con
 - Multiple certification support (CAPM, PSM1, PMP)
 - Study by specific topics
 - Instant answer feedback with explanations
-- Question bookmarking and review
+- Detailed performance analytics by topic
 
 </td>
 <td>
 
-**📱 User Experience**
+**💱 User Experience**
 - Fully responsive mobile design
-- Dark/light theme support
 - Intuitive navigation
-- Session persistence
+- Comprehensive session history tracking
+- Real-time progress updates
 
 </td>
 </tr>
