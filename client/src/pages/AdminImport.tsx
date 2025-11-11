@@ -138,8 +138,8 @@ export default function AdminImport() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 p-4">
-      <div className="max-w-4xl mx-auto">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 p-4 flex justify-center">
+      <div className="max-w-4xl w-full">
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3 md:gap-4 mb-6">
           <div className="flex flex-col sm:flex-row gap-2">
             <Button

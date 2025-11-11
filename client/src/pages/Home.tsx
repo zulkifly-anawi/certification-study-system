@@ -118,8 +118,8 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50">
       {/* Header */}
-      <header className="bg-white border-b shadow-sm sticky top-0 z-50">
-        <div className="w-full px-4 md:px-0 md:container py-3 md:py-4">
+      <header className="bg-white border-b shadow-sm sticky top-0 z-50 flex justify-center">
+        <div className="w-full px-4 py-3 md:py-4 max-w-7xl">
           <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3 md:gap-4">
             {/* Logo and Title */}
             <div className="flex items-center gap-3 min-w-0">
@@ -176,8 +176,8 @@ export default function Home() {
       </header>
 
       {/* Main Content */}
-      <main className="w-full px-4 md:px-0 md:container py-8">
-        <div className="max-w-5xl mx-auto">
+      <main className="w-full px-4 py-8 flex justify-center">
+        <div className="max-w-5xl w-full">
           <div className="text-center mb-8">
             <h2 className="text-3xl font-bold text-foreground mb-2">
               Choose Your Study Mode
