@@ -183,7 +183,7 @@ export default function AdminImport() {
         {/* Admin Actions */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
           {/* Export Card */}
-          <Card className="bg-gradient-to-r from-green-50 to-emerald-50 border-green-200">
+          <Card>
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <Download className="w-5 h-5 text-green-600" />
