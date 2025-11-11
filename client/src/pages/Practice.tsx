@@ -13,6 +13,8 @@ import { useCertification } from "@/contexts/CertificationContext";
 import { useState, useEffect, useMemo } from "react";
 import { toast } from "sonner";
 import { ThemeToggle } from "@/components/ThemeToggle";
+import ResumeSessionDialog from "@/components/ResumeSessionDialog";
+import { saveSessionState, loadSessionState, clearSessionState, hasResumableSession } from "@/lib/sessionStorage";
 
 export default function Practice() {
   const { isAuthenticated } = useAuth();
@@ -31,12 +33,26 @@ export default function Practice() {
   const [sessionId, setSessionId] = useState<number | null>(null);
   const [startTime, setStartTime] = useState<number>(0);
   const [questions, setQuestions] = useState<any[]>([]);
+  const [showResumeDialog, setShowResumeDialog] = useState(false);
+  const [resumedSession, setResumedSession] = useState<any>(null);
+  const [elapsedBeforeResume, setElapsedBeforeResume] = useState(0);
 
   const topics = trpc.questions.getTopics.useQuery({ certification: selectedCertification }, { enabled: isAuthenticated });
   const startSession = trpc.sessions.start.useMutation();
   const submitAnswer = trpc.sessions.submitAnswer.useMutation();
   const completeSession = trpc.sessions.complete.useMutation();
   const utils = trpc.useUtils();
+
+  // Check for resumable session on mount
+  useEffect(() => {
+    if (isAuthenticated && hasResumableSession()) {
+      const saved = loadSessionState();
+      if (saved) {
+        setResumedSession(saved);
+        setShowResumeDialog(true);
+      }
+    }
+  }, [isAuthenticated]);
 
   // Parse URL params
   useEffect(() => {
@@ -48,6 +64,30 @@ export default function Practice() {
       if (modeParam === "exam") setQuestionCount(150);
     }
   }, []);
+
+  // Handle resume session
+  const handleResumeSession = () => {
+    if (!resumedSession) return;
+
+    setMode(resumedSession.mode);
+    setQuestions(resumedSession.questions);
+    setCurrentQuestionIndex(resumedSession.currentQuestionIndex);
+    setSelectedAnswer(resumedSession.selectedAnswer);
+    setSelectedAnswers(resumedSession.selectedAnswers);
+    setSessionId(resumedSession.sessionId);
+    setStartTime(Date.now());
+    setElapsedBeforeResume(resumedSession.elapsedTime + Math.floor((Date.now() - resumedSession.startTime) / 1000));
+    setStarted(true);
+    setShowResumeDialog(false);
+    toast.success("Session resumed!");
+  };
+
+  // Handle start new session
+  const handleStartNew = () => {
+    clearSessionState();
+    setResumedSession(null);
+    setShowResumeDialog(false);
+  };
 
   const handleStart = async () => {
     try {
@@ -111,11 +151,30 @@ export default function Practice() {
 
   const handleNext = () => {
     if (currentQuestionIndex < questions.length - 1) {
-      setCurrentQuestionIndex(currentQuestionIndex + 1);
+      const nextIndex = currentQuestionIndex + 1;
+      setCurrentQuestionIndex(nextIndex);
       setSelectedAnswer("");
       setSelectedAnswers(new Set());
       setShowFeedback(false);
       setFeedback(null);
+
+      // Save session state to localStorage for Practice and Quiz modes only
+      if ((mode === "practice" || mode === "quiz") && sessionId) {
+        saveSessionState({
+          sessionId,
+          mode,
+          certification: selectedCertification,
+          selectedTopic: mode === "topic" ? selectedTopic : undefined,
+          questions,
+          currentQuestionIndex: nextIndex,
+          selectedAnswer: "",
+          selectedAnswers: new Set(),
+          startTime,
+          elapsedTime: elapsedBeforeResume,
+          totalQuestions: questions.length,
+          savedAt: Date.now(),
+        });
+      }
     } else {
       handleComplete();
     }
@@ -130,6 +189,9 @@ export default function Practice() {
         sessionId,
         durationSeconds,
       });
+
+      // Clear localStorage after session completion
+      clearSessionState();
 
       // Invalidate progress queries to refetch updated data
       await utils.progress.getStats.invalidate();
@@ -163,6 +225,12 @@ export default function Practice() {
   if (!started) {
     return (
       <div className="min-h-screen bg-background p-4">
+        <ResumeSessionDialog
+          open={showResumeDialog}
+          savedSession={resumedSession}
+          onResume={handleResumeSession}
+          onStartNew={handleStartNew}
+        />
         <div className="container max-w-2xl mx-auto py-8">
           <div className="flex justify-between items-center mb-4">
             <Button
