@@ -117,9 +117,9 @@ export default function Home() {
   const topicCount = stats?.topicProgress?.length || 0;
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50">
+    <div className="min-h-screen bg-background">
       {/* Header */}
-      <header className="bg-white border-b shadow-sm sticky top-0 z-50 flex justify-center">
+      <header className="bg-card border-b shadow-sm sticky top-0 z-50 flex justify-center">
         <div className="w-full px-4 py-3 md:py-4 max-w-7xl">
           <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3 md:gap-4">
             {/* Logo and Title */}

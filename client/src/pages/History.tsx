@@ -76,7 +76,7 @@ export default function History() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 p-4 flex justify-center">
+    <div className="min-h-screen bg-background p-4 flex justify-center">
       <div className="max-w-5xl w-full py-8">
         <div className="flex justify-between items-center mb-4">
           <Button

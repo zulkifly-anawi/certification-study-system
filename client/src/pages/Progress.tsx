@@ -70,7 +70,7 @@ export default function Progress() {
   const overallAccuracy = totalQuestions > 0 ? Math.round((totalCorrect / totalQuestions) * 100) : 0;
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 p-4 flex justify-center">
+    <div className="min-h-screen bg-background p-4 flex justify-center">
       <div className="max-w-6xl w-full py-8">
         <div className="flex justify-between items-center mb-4">
           <Button

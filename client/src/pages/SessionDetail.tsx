@@ -47,7 +47,7 @@ export default function SessionDetail() {
 
   if (error) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 p-4">
+      <div className="min-h-screen bg-background p-4">
         <div className="container max-w-4xl mx-auto py-8">
           <Button
             variant="ghost"
@@ -90,7 +90,7 @@ export default function SessionDetail() {
 
   if (!sessionQuery.data) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 p-4">
+      <div className="min-h-screen bg-background p-4">
         <div className="container max-w-4xl mx-auto py-8">
           <Button
             variant="ghost"
@@ -158,16 +158,18 @@ export default function SessionDetail() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 p-4 flex justify-center">
+    <div className="min-h-screen bg-background p-4 flex justify-center">
       <div className="max-w-4xl w-full py-8">
-        <Button
-          variant="ghost"
-          className="mb-4"
-          onClick={() => setLocation("/history")}
-        >
-          <ArrowLeft className="w-4 h-4 mr-2" />
-          Back to History
-        </Button>
+        <div className="flex justify-between items-center mb-4">
+          <Button
+            variant="ghost"
+            onClick={() => setLocation("/history")}
+          >
+            <ArrowLeft className="w-4 h-4 mr-2" />
+            Back to History
+          </Button>
+          <ThemeToggle />
+        </div>
 
         {/* Session Summary */}
         <Card className="mb-6">

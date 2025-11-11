@@ -162,7 +162,7 @@ export default function Practice() {
 
   if (!started) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 p-4">
+      <div className="min-h-screen bg-background p-4">
         <div className="container max-w-2xl mx-auto py-8">
           <div className="flex justify-between items-center mb-4">
             <Button
@@ -281,7 +281,7 @@ export default function Practice() {
   const currentQuestion = questions[currentQuestionIndex];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 p-4">
+    <div className="min-h-screen bg-background p-4">
       <div className="container max-w-4xl mx-auto py-8">
         {/* Progress Bar */}
         <div className="mb-6">
