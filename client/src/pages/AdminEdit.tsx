@@ -241,11 +241,11 @@ export default function AdminEdit() {
                 <div className="space-y-2 max-h-96 overflow-y-auto">
                   {filteredQuestions.map((q) => {
                     const difficultyColors = {
-                      easy: "bg-green-100 text-green-800",
-                      medium: "bg-yellow-100 text-yellow-800",
-                      hard: "bg-red-100 text-red-800",
+                      easy: "bg-card text-foreground border border-border",
+                      medium: "bg-card text-foreground border border-border",
+                      hard: "bg-card text-foreground border border-border",
                     };
-                    const diffColor = difficultyColors[q.difficulty] || "bg-gray-100 text-gray-800";
+                    const diffColor = difficultyColors[q.difficulty] || "bg-card text-foreground border border-border";
                     const preview = q.text.substring(0, 80) + (q.text.length > 80 ? "..." : "");
                     
                     return (

@@ -195,8 +195,8 @@ export default function AdminImport() {
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="bg-card rounded-lg p-4 border border-border">
-                <p className="text-sm text-gray-600 mb-4">
-                  Total: <span className="font-bold text-green-600">{exportQuery.data?.totalCount || 0}</span>
+                <p className="text-sm text-muted-foreground mb-4">
+                  Total: <span className="font-bold text-foreground">{exportQuery.data?.totalCount || 0}</span>
                 </p>
                 <Button
                   onClick={handleExport}
@@ -211,7 +211,7 @@ export default function AdminImport() {
           </Card>
 
           {/* Add Question Card */}
-          <Card className="bg-gradient-to-r from-purple-50 to-pink-50 border-purple-200">
+          <Card>
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <Upload className="w-5 h-5 text-purple-600" />
@@ -223,7 +223,7 @@ export default function AdminImport() {
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="bg-card rounded-lg p-4 border border-border">
-                <p className="text-sm text-gray-600 mb-4">
+                <p className="text-sm text-muted-foreground mb-4">
                   Add individual questions with multiple options
                 </p>
                 <Button
@@ -238,7 +238,7 @@ export default function AdminImport() {
           </Card>
 
           {/* Edit Card */}
-          <Card className="bg-gradient-to-r from-blue-50 to-cyan-50 border-blue-200">
+          <Card>
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <Upload className="w-5 h-5 text-blue-600" />
@@ -250,7 +250,7 @@ export default function AdminImport() {
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="bg-card rounded-lg p-4 border border-border">
-                <p className="text-sm text-gray-600 mb-4">
+                <p className="text-sm text-muted-foreground mb-4">
                   Manage {exportQuery.data?.totalCount || 0} questions
                 </p>
                 <Button
@@ -279,8 +279,8 @@ export default function AdminImport() {
           <CardContent className="space-y-6">
             {/* Instructions */}
             <div className="bg-card border border-border rounded-lg p-4">
-              <h3 className="font-semibold text-blue-900 mb-2">How to Import Questions:</h3>
-              <ol className="text-sm text-blue-800 space-y-1 list-decimal list-inside">
+              <h3 className="font-semibold text-foreground mb-2">How to Import Questions:</h3>
+              <ol className="text-sm text-muted-foreground space-y-1 list-decimal list-inside">
                 <li>Prepare your questions in JSON format (see example below)</li>
                 <li>Paste the JSON array into the text area</li>
                 <li>Click "Import Questions"</li>
@@ -291,15 +291,15 @@ export default function AdminImport() {
             {/* Example */}
             <div>
               <h3 className="font-semibold mb-2">Example JSON Format:</h3>
-              <pre className="bg-gray-100 p-4 rounded text-xs overflow-x-auto">
+              <pre className="bg-muted p-4 rounded text-xs overflow-x-auto">
                 {JSON.stringify([exampleQuestion], null, 2)}
               </pre>
-              <p className="text-xs text-gray-600 mt-2">
+              <p className="text-xs text-muted-foreground mt-2">
                 Required fields: text, options (A-Z for standard and matching questions), correctAnswer, topic
                 <br />
                 Optional fields: explanation, difficulty (default: medium)
                 <br />
-                <span className="text-green-600 font-semibold">NEW: Now supports matching questions with options A-Z (not just A-D)!</span>
+                <span className="text-foreground font-semibold">NEW: Now supports matching questions with options A-Z (not just A-D)!</span>
               </p>
             </div>
 
@@ -316,10 +316,10 @@ export default function AdminImport() {
 
             {/* Stats */}
             {jsonInput.trim() && (
-              <div className="bg-green-50 border border-green-200 rounded-lg p-4">
+              <div className="bg-card border border-border rounded-lg p-4">
                 <div className="flex items-center gap-2 mb-2">
-                  <CheckCircle className="w-4 h-4 text-green-600" />
-                  <span className="font-semibold text-green-900">
+                  <CheckCircle className="w-4 h-4 text-foreground" />
+                  <span className="font-semibold text-foreground">
                     {(() => {
                       try {
                         const parsed = JSON.parse(jsonInput);
@@ -350,7 +350,7 @@ export default function AdminImport() {
           <CardHeader>
             <CardTitle className="text-base">Tips for Bulk Import/Export:</CardTitle>
           </CardHeader>
-          <CardContent className="space-y-2 text-sm text-gray-600">
+          <CardContent className="space-y-2 text-sm text-muted-foreground">
             <p>• You can import multiple questions at once by providing a JSON array</p>
             <p>• Make sure all required fields are present for each question</p>
             <p>• Use consistent topic names across all questions</p>

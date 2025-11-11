@@ -28,7 +28,7 @@ export default function AdminCertifications() {
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
           <h1 className="text-2xl font-bold mb-4">Access Denied</h1>
-          <p className="text-gray-600 mb-6">You need admin privileges to access this page</p>
+          <p className="text-muted-foreground mb-6">You need admin privileges to access this page</p>
           <Button onClick={() => navigate("/")} variant="default">
             Back to Home
           </Button>
@@ -112,7 +112,7 @@ export default function AdminCertifications() {
             </Button>
             <div className="min-w-0">
               <h1 className="text-2xl md:text-3xl font-bold truncate">Manage Certifications</h1>
-              <p className="text-xs md:text-sm text-gray-600 mt-1 truncate">Add, edit, or delete certification programs</p>
+              <p className="text-xs md:text-sm text-muted-foreground mt-1 truncate">Add, edit, or delete certification programs</p>
             </div>
           </div>
           <Dialog open={isAddOpen} onOpenChange={setIsAddOpen}>
@@ -175,13 +175,13 @@ export default function AdminCertifications() {
           {isLoading ? (
             <Card>
               <CardContent className="pt-6">
-                <p className="text-center text-gray-500">Loading certifications...</p>
+                <p className="text-center text-muted-foreground">Loading certifications...</p>
               </CardContent>
             </Card>
           ) : certifications.length === 0 ? (
             <Card>
               <CardContent className="pt-6">
-                <p className="text-center text-gray-500">No certifications found</p>
+                <p className="text-center text-muted-foreground">No certifications found</p>
               </CardContent>
             </Card>
           ) : (
@@ -193,7 +193,7 @@ export default function AdminCertifications() {
                       <CardTitle className="text-lg">{cert.name}</CardTitle>
                       <CardDescription>Code: {cert.code}</CardDescription>
                       {cert.description && (
-                        <p className="text-sm text-gray-600 mt-2">{cert.description}</p>
+                        <p className="text-sm text-muted-foreground mt-2">{cert.description}</p>
                       )}
                     </div>
                     <div className="flex gap-2">
