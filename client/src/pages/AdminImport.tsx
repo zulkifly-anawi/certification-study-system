@@ -28,7 +28,7 @@ export default function AdminImport() {
   // Check if user is admin
   if (!isAuthenticated || user?.role !== "admin") {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100 p-4">
+      <div className="min-h-screen flex items-center justify-center bg-background p-4">
         <Card className="max-w-md">
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
@@ -138,7 +138,7 @@ export default function AdminImport() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 p-4 flex justify-center">
+    <div className="min-h-screen bg-background p-4 flex justify-center">
       <div className="max-w-4xl w-full">
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3 md:gap-4 mb-6">
           <div className="flex flex-col sm:flex-row gap-2">
@@ -194,7 +194,7 @@ export default function AdminImport() {
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
-              <div className="bg-white rounded-lg p-4 border border-green-100">
+              <div className="bg-card rounded-lg p-4 border border-border">
                 <p className="text-sm text-gray-600 mb-4">
                   Total: <span className="font-bold text-green-600">{exportQuery.data?.totalCount || 0}</span>
                 </p>
@@ -222,7 +222,7 @@ export default function AdminImport() {
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
-              <div className="bg-white rounded-lg p-4 border border-purple-100">
+              <div className="bg-card rounded-lg p-4 border border-border">
                 <p className="text-sm text-gray-600 mb-4">
                   Add individual questions with multiple options
                 </p>
@@ -249,7 +249,7 @@ export default function AdminImport() {
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
-              <div className="bg-white rounded-lg p-4 border border-blue-100">
+              <div className="bg-card rounded-lg p-4 border border-border">
                 <p className="text-sm text-gray-600 mb-4">
                   Manage {exportQuery.data?.totalCount || 0} questions
                 </p>
@@ -278,7 +278,7 @@ export default function AdminImport() {
           </CardHeader>
           <CardContent className="space-y-6">
             {/* Instructions */}
-            <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+            <div className="bg-card border border-border rounded-lg p-4">
               <h3 className="font-semibold text-blue-900 mb-2">How to Import Questions:</h3>
               <ol className="text-sm text-blue-800 space-y-1 list-decimal list-inside">
                 <li>Prepare your questions in JSON format (see example below)</li>

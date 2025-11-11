@@ -138,7 +138,7 @@ export default function AdminEdit() {
   // Conditional rendering instead of early return
   if (!isAuthenticated || user?.role !== "admin") {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100 p-4">
+      <div className="min-h-screen flex items-center justify-center bg-background p-4">
         <Card className="max-w-md">
           <CardHeader>
             <CardTitle className="flex items-center gap-2 text-xs md:text-sm px-2 md:px-3 py-1 md:py-2 h-9">
@@ -158,7 +158,7 @@ export default function AdminEdit() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 p-4 flex justify-center">
+    <div className="min-h-screen bg-background p-4 flex justify-center">
       <div className="max-w-6xl w-full py-8">
         <Button
           variant="ghost"

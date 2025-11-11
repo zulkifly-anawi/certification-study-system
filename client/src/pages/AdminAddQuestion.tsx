@@ -146,7 +146,7 @@ export default function AdminAddQuestion() {
 
   if (!isAuthenticated || user?.role !== "admin") {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100 p-4">
+      <div className="min-h-screen flex items-center justify-center bg-background p-4">
         <Card className="max-w-md">
           <CardHeader>
             <CardTitle>Access Denied</CardTitle>
@@ -163,7 +163,7 @@ export default function AdminAddQuestion() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 p-4 flex justify-center">
+    <div className="min-h-screen bg-background p-4 flex justify-center">
       <div className="max-w-3xl w-full py-8">
         <Button
           variant="ghost"

@@ -95,7 +95,7 @@ export default function AdminCertifications() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 flex justify-center">
+    <div className="min-h-screen bg-background flex justify-center">
       <div className="max-w-6xl w-full p-6">
         {/* Header */}
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 md:gap-6 mb-8">
